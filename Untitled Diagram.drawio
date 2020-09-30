@@ -1,1 +1,85 @@
-<mxfile host="app.diagrams.net" modified="2020-09-30T18:02:21.788Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36" version="13.7.7" etag="aBcd6eozGA9EybIGpW-Q" type="github"><diagram id="F_qcPq7MR6brmlPEMF5c">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2020-09-30T19:04:15.134Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36" etag="o2I_HPV4kyfK-Nn_MzHi" version="13.7.7" type="github">
+  <diagram id="F_qcPq7MR6brmlPEMF5c" name="Page-1">
+    <mxGraphModel dx="1038" dy="580" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="aGR_cuzpQr1dUesHsS2U-27" value="Power Grid" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" vertex="1" parent="1">
+          <mxGeometry x="50" y="40" width="160" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="aGR_cuzpQr1dUesHsS2U-28" value="+Bus bars&#xa;+Power Lines&#xa;+Transformers" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="aGR_cuzpQr1dUesHsS2U-27">
+          <mxGeometry y="30" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="aGR_cuzpQr1dUesHsS2U-33" value="Transformer" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" vertex="1" parent="1">
+          <mxGeometry x="50" y="190" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="aGR_cuzpQr1dUesHsS2U-34" value="+ID&#xa;+Voltage 1&#xa;+Voltage 2&#xa;+Bus bar 1&#xa;+Bus bar 2" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="aGR_cuzpQr1dUesHsS2U-33">
+          <mxGeometry y="30" width="160" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="aGR_cuzpQr1dUesHsS2U-29" value="Power Line" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" vertex="1" parent="1">
+          <mxGeometry x="254" y="50" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="aGR_cuzpQr1dUesHsS2U-30" value="+ID&#xa;+Impedance&#xa;+Bus bar1&#xa;+Bus bar2" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="aGR_cuzpQr1dUesHsS2U-29">
+          <mxGeometry y="30" width="160" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="aGR_cuzpQr1dUesHsS2U-40" value="DÙVIDAS:&amp;nbsp;&lt;br&gt;-Breaker entre Power Line e Bus bar &lt;b&gt;OU &lt;/b&gt;alinhado em paralelo" style="text;html=1;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=#FF0000;" vertex="1" parent="1">
+          <mxGeometry x="650" y="40" width="160" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="aGR_cuzpQr1dUesHsS2U-31" value="Bus bar" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" vertex="1" parent="1">
+          <mxGeometry x="460" y="40" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="aGR_cuzpQr1dUesHsS2U-32" value="+ID&#xa;+Voltage&#xa;+Transformer1&#xa;+Transformer2" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="aGR_cuzpQr1dUesHsS2U-31">
+          <mxGeometry y="30" width="160" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="aGR_cuzpQr1dUesHsS2U-35" value="Breaker" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" vertex="1" parent="1">
+          <mxGeometry x="254" y="200" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="aGR_cuzpQr1dUesHsS2U-36" value="+ID&#xa;+MAXCurrent&#xa;+MAXVoltage&#xa;+ConnectionPoints" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="aGR_cuzpQr1dUesHsS2U-35">
+          <mxGeometry y="30" width="160" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="aGR_cuzpQr1dUesHsS2U-41" value="Substation" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" vertex="1" parent="1">
+          <mxGeometry x="480" y="200" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="aGR_cuzpQr1dUesHsS2U-42" value="+ID&#xa;+GPS coordinates&#xa;+name&#xa;+ONLY 1supervisor" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="aGR_cuzpQr1dUesHsS2U-41">
+          <mxGeometry y="30" width="160" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="aGR_cuzpQr1dUesHsS2U-43" value="Supervisor" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" vertex="1" parent="1">
+          <mxGeometry x="667" y="200" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="aGR_cuzpQr1dUesHsS2U-44" value="+ID&#xa;+Substations(1 to many)&#xa;+Voltage?!?!?!!?&#xa;+person" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="aGR_cuzpQr1dUesHsS2U-43">
+          <mxGeometry y="30" width="160" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="aGR_cuzpQr1dUesHsS2U-45" value="Incident" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="70" y="340" width="160" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="aGR_cuzpQr1dUesHsS2U-46" value="+ID&#xa;+Instant&#xa;+Description&#xa;+Severaty&#xa;+point of the line(for lines)&#xa;+analyst" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="aGR_cuzpQr1dUesHsS2U-45">
+          <mxGeometry y="30" width="160" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="aGR_cuzpQr1dUesHsS2U-47" value="History" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="300" y="360" width="130" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="aGR_cuzpQr1dUesHsS2U-48" value="+ConnectionPoint&#xa;+Voltage&#xa;+Current&#xa;+Date&amp;Time&#xa;&#xa;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="aGR_cuzpQr1dUesHsS2U-47">
+          <mxGeometry y="30" width="130" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="aGR_cuzpQr1dUesHsS2U-49" value="Connections" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="507" y="360" width="103" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="aGR_cuzpQr1dUesHsS2U-50" value="+PoweLine&#xa;+Transformer" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="aGR_cuzpQr1dUesHsS2U-49">
+          <mxGeometry y="30" width="103" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="aGR_cuzpQr1dUesHsS2U-51" value="Person" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="667" y="360" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="aGR_cuzpQr1dUesHsS2U-52" value="+name&#xa;+address&#xa;+phone contact&#xa;+Tax payer ID&#xa;+" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="aGR_cuzpQr1dUesHsS2U-51">
+          <mxGeometry y="30" width="160" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="aGR_cuzpQr1dUesHsS2U-53" value="Analyst" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="310" y="489" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="aGR_cuzpQr1dUesHsS2U-54" value="+Person&#xa;+Cause&#xa;+Report" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" vertex="1" parent="aGR_cuzpQr1dUesHsS2U-53">
+          <mxGeometry y="30" width="160" height="90" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
