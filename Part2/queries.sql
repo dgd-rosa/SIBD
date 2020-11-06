@@ -1,0 +1,1 @@
+SELECT a.analyst_name FROM Incident i JOIN analyses a on (i.instant = a.instant and i.element_id = a.element_id) WHERE a.element_id = 'B-789';

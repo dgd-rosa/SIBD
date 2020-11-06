@@ -1,0 +1,106 @@
+<html>
+<head>
+<title>console_1.sql</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+console_1.sql</font>
+</center></td></tr></table>
+<pre><span class="s0">INSERT INTO </span><span class="s1">Person</span>
+<span class="s0">VALUES </span><span class="s1">(</span><span class="s2">'Pedro'</span><span class="s0">, </span><span class="s2">'Alentenjo'</span><span class="s0">, </span><span class="s2">'56656'</span><span class="s0">, </span><span class="s2">'4578'</span><span class="s1">)</span><span class="s0">;</span>
+<span class="s0">INSERT INTO </span><span class="s1">Supervisor</span>
+<span class="s0">VALUES </span><span class="s1">(</span><span class="s2">'Pedro'</span><span class="s0">, </span><span class="s2">'Alentenjo'</span><span class="s1">)</span><span class="s0">;</span>
+<span class="s0">INSERT INTO </span><span class="s1">Analyst</span>
+<span class="s0">VALUES </span><span class="s1">(</span><span class="s2">'Pedro'</span><span class="s0">, </span><span class="s2">'Alentenjo'</span><span class="s1">)</span><span class="s0">;</span>
+
+<span class="s0">INSERT INTO </span><span class="s1">Person</span>
+<span class="s0">VALUES </span><span class="s1">(</span><span class="s2">'Pedro'</span><span class="s0">, </span><span class="s2">'Lisboa'</span><span class="s0">, </span><span class="s2">'654'</span><span class="s0">, </span><span class="s2">'2198'</span><span class="s1">)</span><span class="s0">;</span>
+<span class="s0">INSERT INTO </span><span class="s1">Analyst</span>
+<span class="s0">VALUES </span><span class="s1">(</span><span class="s2">'Pedro'</span><span class="s0">, </span><span class="s2">'Lisboa'</span><span class="s1">)</span><span class="s0">;</span>
+
+<span class="s0">INSERT INTO </span><span class="s1">Person</span>
+<span class="s0">VALUES </span><span class="s1">(</span><span class="s2">'D Rose'</span><span class="s0">, </span><span class="s2">'Forte da Casa'</span><span class="s0">, </span><span class="s2">'6+5+6'</span><span class="s0">, </span><span class="s2">'259219516'</span><span class="s1">)</span><span class="s0">;</span>
+<span class="s0">INSERT INTO </span><span class="s1">Supervisor</span>
+<span class="s0">VALUES </span><span class="s1">(</span><span class="s2">'D Rose'</span><span class="s0">, </span><span class="s2">'Forte da Casa'</span><span class="s1">)</span><span class="s0">;</span>
+
+<span class="s0">SELECT </span><span class="s1">*</span>
+<span class="s0">FROM </span><span class="s1">Supervisor </span><span class="s0">s</span>
+         <span class="s0">JOIN </span><span class="s1">Person p </span><span class="s0">ON </span><span class="s1">(</span><span class="s0">s</span><span class="s1">.name = p.name </span><span class="s0">AND s</span><span class="s1">.address = p.address)</span><span class="s0">;</span>
+
+
+<span class="s0">INSERT INTO </span><span class="s1">Substation</span>
+<span class="s0">VALUES </span><span class="s1">(</span><span class="s2">'12332'</span><span class="s0">, </span><span class="s2">'Lisbon'</span><span class="s1">)</span><span class="s0">;</span>
+<span class="s0">INSERT INTO </span><span class="s1">Supervises</span>
+<span class="s0">VALUES </span><span class="s1">(</span><span class="s2">'Pedro'</span><span class="s0">, </span><span class="s2">'Alentenjo'</span><span class="s0">, </span><span class="s2">'12332'</span><span class="s1">)</span><span class="s0">;</span>
+<span class="s0">SELECT </span><span class="s1">*</span>
+<span class="s0">FROM </span><span class="s1">Supervises sup</span>
+         <span class="s0">JOIN </span><span class="s1">Supervisor </span><span class="s0">s ON </span><span class="s1">(sup.supervisor_name = </span><span class="s0">s</span><span class="s1">.name </span><span class="s0">AND </span><span class="s1">sup.supervisor_address = </span><span class="s0">s</span><span class="s1">.address)</span>
+         <span class="s0">JOIN </span><span class="s1">Substation S2 </span><span class="s0">on </span><span class="s1">sup.gps_coords = S2.gps_coords</span><span class="s0">;</span>
+
+
+<span class="s0">INSERT INTO Element</span>
+<span class="s0">VALUES </span><span class="s1">(</span><span class="s2">'AC-130'</span><span class="s1">)</span><span class="s0">;</span>
+<span class="s0">INSERT INTO </span><span class="s1">Incident</span>
+<span class="s0">VALUES </span><span class="s1">(</span><span class="s2">'Failure in bus bar'</span><span class="s0">, </span><span class="s2">'1999-01-08 04:05:06'</span><span class="s0">, </span><span class="s2">'low'</span><span class="s0">, </span><span class="s2">'AC-130'</span><span class="s1">)</span><span class="s0">;</span>
+<span class="s0">INSERT INTO </span><span class="s1">Analyses</span>
+<span class="s0">VALUES </span><span class="s1">(</span><span class="s2">'Pedro'</span><span class="s0">, </span><span class="s2">'Alentenjo'</span><span class="s0">, </span><span class="s2">'1999-01-08 04:05:06'</span><span class="s0">, </span><span class="s2">'AC-130'</span><span class="s0">, </span><span class="s2">'Messy execution'</span><span class="s1">)</span><span class="s0">;</span>
+
+
+<span class="s0">INSERT INTO </span><span class="s1">Incident</span>
+<span class="s0">VALUES </span><span class="s1">(</span><span class="s2">'Failure in bus bar 2'</span><span class="s0">, </span><span class="s2">'1999-01-09 04:05:06'</span><span class="s0">, </span><span class="s2">'low'</span><span class="s0">, </span><span class="s2">'AC-130'</span><span class="s1">)</span><span class="s0">;</span>
+<span class="s0">INSERT INTO </span><span class="s1">Analyses</span>
+<span class="s0">VALUES </span><span class="s1">(</span><span class="s2">'Pedro'</span><span class="s0">, </span><span class="s2">'Lisboa'</span><span class="s0">, </span><span class="s2">'1999-01-09 04:05:06'</span><span class="s0">, </span><span class="s2">'AC-130'</span><span class="s0">, </span><span class="s2">'Messy execution'</span><span class="s1">)</span><span class="s0">;</span>
+
+
+<span class="s0">SELECT </span><span class="s1">*</span>
+<span class="s0">FROM </span><span class="s1">Analyses a</span>
+         <span class="s0">JOIN </span><span class="s1">Incident i </span><span class="s0">on </span><span class="s1">(a.instant = i.instant </span><span class="s0">AND </span><span class="s1">a.element_id = i.element_id)</span><span class="s0">;</span>
+<span class="s0">SELECT </span><span class="s1">*</span>
+<span class="s0">FROM </span><span class="s1">Incident i</span>
+         <span class="s0">JOIN Element </span><span class="s1">e </span><span class="s0">ON </span><span class="s1">e.id = i.element_id</span><span class="s0">;</span>
+
+
+<span class="s0">INSERT INTO </span><span class="s1">Line_Incident</span>
+<span class="s0">VALUES </span><span class="s1">(</span><span class="s2">'x: 20, y: 25'</span><span class="s0">, </span><span class="s2">'1999-01-09 04:05:06.000000'</span><span class="s0">, </span><span class="s2">'AC-130'</span><span class="s1">)</span><span class="s0">;</span>
+<span class="s0">INSERT INTO </span><span class="s1">Line_Incident</span>
+<span class="s0">VALUES </span><span class="s1">(</span><span class="s2">'x: 20, y: 25'</span><span class="s0">, </span><span class="s2">'1999-01-08 04:05:06'</span><span class="s0">, </span><span class="s2">'AC-130'</span><span class="s1">)</span><span class="s0">;</span>
+<span class="s0">SELECT </span><span class="s1">*</span>
+<span class="s0">FROM </span><span class="s1">Line_Incident li</span>
+         <span class="s0">JOIN </span><span class="s1">Incident i </span><span class="s0">ON </span><span class="s1">(li.element_id = i.element_id </span><span class="s0">AND </span><span class="s1">li.instant = i.instant)</span>
+         <span class="s0">JOIN Element </span><span class="s1">e </span><span class="s0">ON </span><span class="s1">e.id = i.element_id</span>
+         <span class="s0">JOIN </span><span class="s1">analyses an </span><span class="s0">ON </span><span class="s1">(an.element_id = e.id </span><span class="s0">AND </span><span class="s1">an.instant = li.instant)</span><span class="s0">;</span>
+
+
+
+<span class="s0">INSERT INTO </span><span class="s1">Line</span>
+<span class="s0">VALUES </span><span class="s1">(</span><span class="s3">50</span><span class="s0">, </span><span class="s2">'AC-130'</span><span class="s1">)</span><span class="s0">;</span>
+<span class="s0">INSERT INTO Element</span>
+<span class="s0">VALUES </span><span class="s1">(</span><span class="s2">'B1'</span><span class="s1">)</span><span class="s0">;</span>
+<span class="s0">INSERT INTO Element</span>
+<span class="s0">VALUES </span><span class="s1">(</span><span class="s2">'B2'</span><span class="s1">)</span><span class="s0">;</span>
+<span class="s0">INSERT INTO </span><span class="s1">Bus_Bar</span>
+<span class="s0">VALUES </span><span class="s1">(</span><span class="s3">50</span><span class="s0">, </span><span class="s2">'B1'</span><span class="s1">)</span><span class="s0">;</span>
+<span class="s0">INSERT INTO </span><span class="s1">Bus_Bar</span>
+<span class="s0">VALUES </span><span class="s1">(</span><span class="s3">70</span><span class="s0">, </span><span class="s2">'B2'</span><span class="s1">)</span><span class="s0">;</span>
+<span class="s0">INSERT INTO </span><span class="s1">Line_Connection</span>
+<span class="s0">VALUES </span><span class="s1">(</span><span class="s2">'AC-130'</span><span class="s0">, </span><span class="s2">'B1'</span><span class="s0">, </span><span class="s2">'B2'</span><span class="s1">)</span><span class="s0">;</span>
+
+<span class="s0">INSERT INTO Element</span>
+<span class="s0">VALUES </span><span class="s1">(</span><span class="s2">'T1'</span><span class="s1">)</span><span class="s0">;</span>
+<span class="s0">INSERT INTO </span><span class="s1">Transformer</span>
+<span class="s0">VALUES </span><span class="s1">(</span><span class="s3">50</span><span class="s0">, </span><span class="s3">80</span><span class="s0">, </span><span class="s2">'T1'</span><span class="s1">)</span><span class="s0">;</span>
+<span class="s0">INSERT INTO </span><span class="s1">Transformer_Connection</span>
+<span class="s0">VALUES </span><span class="s1">(</span><span class="s2">'T1'</span><span class="s0">, </span><span class="s2">'B1'</span><span class="s0">, </span><span class="s2">'B2'</span><span class="s1">)</span><span class="s0">;</span>
+
+</pre>
+</body>
+</html>

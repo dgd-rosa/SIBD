@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="ist190105@db.tecnico.ulisboa.pt" uuid="79794e00-2930-4803-bdab-16a1e4691363">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://db.tecnico.ulisboa.pt:5432/ist190105</jdbc-url>
+    </data-source>
+  </component>
+</project>

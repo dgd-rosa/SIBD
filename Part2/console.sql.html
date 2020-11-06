@@ -1,0 +1,226 @@
+<html>
+<head>
+<title>console.sql</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #808080;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #cc7832;}
+.s3 { color: #6897bb;}
+.s4 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+console.sql</font>
+</center></td></tr></table>
+<pre><span class="s0">-- Person must appear in either supervisor and/or analyst</span>
+
+<span class="s2">DROP TABLE IF EXISTS </span><span class="s1">Person </span><span class="s2">CASCADE;</span>
+<span class="s2">DROP TABLE IF EXISTS </span><span class="s1">Supervisor </span><span class="s2">CASCADE;</span>
+<span class="s2">DROP TABLE IF EXISTS </span><span class="s1">Substation </span><span class="s2">CASCADE;</span>
+<span class="s2">DROP TABLE IF EXISTS </span><span class="s1">Supervises </span><span class="s2">CASCADE;</span>
+<span class="s2">DROP TABLE IF EXISTS </span><span class="s1">Analyst </span><span class="s2">CASCADE;</span>
+<span class="s2">DROP TABLE IF EXISTS Element CASCADE;</span>
+<span class="s2">DROP TABLE IF EXISTS </span><span class="s1">Incident </span><span class="s2">CASCADE;</span>
+<span class="s2">DROP TABLE IF EXISTS </span><span class="s1">Analyses </span><span class="s2">CASCADE;</span>
+<span class="s2">DROP TABLE IF EXISTS </span><span class="s1">Line_Incident </span><span class="s2">CASCADE;</span>
+<span class="s2">DROP TABLE IF EXISTS </span><span class="s1">Line </span><span class="s2">CASCADE;</span>
+<span class="s2">DROP TABLE IF EXISTS </span><span class="s1">Bus_Bar </span><span class="s2">CASCADE;</span>
+<span class="s2">DROP TABLE IF EXISTS </span><span class="s1">Transformer </span><span class="s2">CASCADE;</span>
+<span class="s2">DROP TABLE IF EXISTS </span><span class="s1">Line_Connection </span><span class="s2">CASCADE;</span>
+<span class="s2">DROP TABLE IF EXISTS </span><span class="s1">Transformer_Connection </span><span class="s2">CASCADE;</span>
+<span class="s2">DROP TABLE IF EXISTS </span><span class="s1">Located </span><span class="s2">CASCADE;</span>
+<span class="s2">DROP TYPE IF EXISTS </span><span class="s1">Severity </span><span class="s2">CASCADE;</span>
+
+
+<span class="s2">CREATE TABLE </span><span class="s1">Person</span>
+<span class="s1">(</span>
+    <span class="s2">name    VARCHAR</span><span class="s1">(</span><span class="s3">100</span><span class="s1">)        </span><span class="s2">NOT NULL,</span>
+    <span class="s1">address </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">100</span><span class="s1">)        </span><span class="s2">NOT NULL,</span>
+    <span class="s1">phone   </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">15</span><span class="s1">) </span><span class="s2">UNIQUE  NOT NULL,</span>
+    <span class="s1">tax_id  </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) </span><span class="s2">UNIQUE NOT NULL,</span>
+    <span class="s2">PRIMARY KEY </span><span class="s1">(</span><span class="s2">name, </span><span class="s1">address)</span>
+<span class="s1">)</span><span class="s2">;</span>
+
+<span class="s0">-- Persons cannot analyse incidents regarding Elements of a Substation they supervises</span>
+<span class="s2">CREATE TABLE </span><span class="s1">Supervisor</span>
+<span class="s1">(</span>
+    <span class="s2">name    VARCHAR</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) </span><span class="s2">NOT NULL,</span>
+    <span class="s1">address </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) </span><span class="s2">NOT NULL,</span>
+    <span class="s2">PRIMARY KEY </span><span class="s1">(</span><span class="s2">name, </span><span class="s1">address)</span><span class="s2">,</span>
+    <span class="s2">FOREIGN KEY </span><span class="s1">(</span><span class="s2">name, </span><span class="s1">address) </span><span class="s2">REFERENCES </span><span class="s1">Person (</span><span class="s2">name, </span><span class="s1">address)</span>
+<span class="s1">)</span><span class="s2">;</span>
+
+<span class="s0">-- INSERT INTO Person VALUES ('Pedro', 'Alentenjo', '56656', '4578');</span>
+<span class="s0">-- INSERT INTO Supervisor VALUES ('Pedro', 'Alentenjo');</span>
+<span class="s0">--</span>
+<span class="s0">-- SELECT * FROM Supervisor s JOIN Person p ON s.name=p.name</span>
+
+
+<span class="s2">CREATE TABLE </span><span class="s1">Substation</span>
+<span class="s1">(</span>
+    <span class="s1">gps_coords    </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) </span><span class="s2">NOT NULL, </span><span class="s0">-- TODO(use point or coordinates data type instead of varchar)</span>
+    <span class="s1">locality_name </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) </span><span class="s2">NOT NULL,</span>
+    <span class="s2">PRIMARY KEY </span><span class="s1">(gps_coords)</span>
+<span class="s1">)</span><span class="s2">;</span>
+
+
+<span class="s2">CREATE TABLE </span><span class="s1">Supervises</span>
+<span class="s1">(</span>
+    <span class="s1">supervisor_name    </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) </span><span class="s2">NOT NULL,</span>
+    <span class="s1">supervisor_address </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) </span><span class="s2">NOT NULL,</span>
+    <span class="s1">gps_coords         </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) </span><span class="s2">NOT NULL,</span>
+    <span class="s2">PRIMARY KEY </span><span class="s1">(gps_coords)</span><span class="s2">,</span>
+    <span class="s2">FOREIGN KEY </span><span class="s1">(gps_coords) </span><span class="s2">REFERENCES </span><span class="s1">Substation (gps_coords)</span><span class="s2">,</span>
+    <span class="s2">FOREIGN KEY </span><span class="s1">(supervisor_name</span><span class="s2">, </span><span class="s1">supervisor_address) </span><span class="s2">REFERENCES </span><span class="s1">Supervisor (</span><span class="s2">name, </span><span class="s1">address)</span>
+<span class="s1">)</span><span class="s2">;</span>
+
+<span class="s0">-- INSERT INTO Substation VALUES ('12332', 'Lisbon');</span>
+<span class="s0">-- INSERT INTO Supervises VALUES ('Pedro', 'Alentenjo', '12332');</span>
+<span class="s0">-- SELECT * FROM Supervises sup JOIN Supervisor s ON (sup.supervisor_name = s.name AND sup.supervisor_address = s.address) JOIN Substation S2 on sup.gps_coords = S2.gps_coords</span>
+
+<span class="s0">-- Persons cannot analyse incidents regarding Elements of a Substation they supervises</span>
+<span class="s2">CREATE TABLE </span><span class="s1">Analyst</span>
+<span class="s1">(</span>
+    <span class="s2">name    VARCHAR</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) </span><span class="s2">NOT NULL,</span>
+    <span class="s1">address </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) </span><span class="s2">NOT NULL,</span>
+    <span class="s2">PRIMARY KEY </span><span class="s1">(</span><span class="s2">name, </span><span class="s1">address)</span><span class="s2">,</span>
+    <span class="s2">FOREIGN KEY </span><span class="s1">(</span><span class="s2">name, </span><span class="s1">address) </span><span class="s2">REFERENCES </span><span class="s1">Person (</span><span class="s2">name, </span><span class="s1">address)</span>
+<span class="s1">)</span><span class="s2">;</span>
+
+<span class="s2">CREATE TYPE </span><span class="s1">Severity </span><span class="s2">AS ENUM </span><span class="s1">(</span><span class="s4">'low'</span><span class="s2">, </span><span class="s4">'medium'</span><span class="s2">, </span><span class="s4">'high'</span><span class="s1">)</span><span class="s2">;</span>
+
+<span class="s0">-- Element must appear in either line, bus bar or transformer</span>
+<span class="s2">CREATE TABLE Element</span>
+<span class="s1">(</span>
+    <span class="s1">id </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">20</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s2">PRIMARY KEY </span><span class="s1">(id)</span>
+<span class="s1">)</span><span class="s2">;</span>
+
+<span class="s2">CREATE TABLE </span><span class="s1">Incident</span>
+<span class="s1">(</span>
+    <span class="s1">description </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) </span><span class="s2">NOT NULL,</span>
+    <span class="s1">instant     </span><span class="s2">TIMESTAMP    NOT NULL,</span>
+    <span class="s1">severity    Severity     </span><span class="s2">NOT NULL,</span>
+    <span class="s1">element_id  </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">20</span><span class="s1">)  </span><span class="s2">NOT NULL, </span><span class="s0">-- Instead of refers_to. TODO(verify if it need to be changed)</span>
+    <span class="s2">PRIMARY KEY </span><span class="s1">(instant</span><span class="s2">, </span><span class="s1">element_id)</span><span class="s2">,</span>
+    <span class="s2">FOREIGN KEY </span><span class="s1">(element_id) </span><span class="s2">REFERENCES Element </span><span class="s1">(id)</span>
+<span class="s1">)</span><span class="s2">;</span>
+
+
+<span class="s2">CREATE TABLE </span><span class="s1">Analyses</span>
+<span class="s1">(</span>
+    <span class="s1">analyst_name    </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">100</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s1">analyst_address </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">100</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s1">instant         </span><span class="s2">TIMESTAMP    NOT NULL,</span>
+    <span class="s1">element_id      </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">20</span><span class="s1">)  </span><span class="s2">NOT NULL,</span>
+    <span class="s1">report          </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) </span><span class="s2">NOT NULL,</span>
+    <span class="s2">PRIMARY KEY </span><span class="s1">(instant</span><span class="s2">, </span><span class="s1">element_id)</span><span class="s2">,</span>
+    <span class="s2">FOREIGN KEY </span><span class="s1">(analyst_name</span><span class="s2">, </span><span class="s1">analyst_address) </span><span class="s2">references </span><span class="s1">Analyst (</span><span class="s2">name, </span><span class="s1">address)</span><span class="s2">,</span>
+    <span class="s2">FOREIGN KEY </span><span class="s1">(instant</span><span class="s2">, </span><span class="s1">element_id) </span><span class="s2">REFERENCES </span><span class="s1">Incident (instant</span><span class="s2">, </span><span class="s1">element_id)</span>
+<span class="s1">)</span><span class="s2">;</span>
+
+<span class="s0">-- INSERT INTO Analyst VALUES ('Pedro', 'Alentenjo');</span>
+<span class="s0">-- INSERT INTO Element VALUES ('AC-130');</span>
+<span class="s0">-- INSERT INTO Incident VALUES ('Failure in bus bar', '1999-01-08 04:05:06', 'low', 'AC-130');</span>
+<span class="s0">-- INSERT INTO Analyses VALUES ('Pedro', 'Alentenjo', '1999-01-08 04:05:06', 'AC-130', 'Messy execution');</span>
+
+<span class="s0">-- INSERT INTO Person VALUES ('Pedro', 'Lisboa', '654', '2198');</span>
+<span class="s0">-- INSERT INTO Analyst VALUES ('Pedro', 'Lisboa');</span>
+
+<span class="s0">-- INSERT INTO Incident VALUES ('Failure in bus bar 2', '1999-01-09 04:05:06', 'low', 'AC-130');</span>
+<span class="s0">-- INSERT INTO Analyses VALUES ('Pedro', 'Lisboa', '1999-01-09 04:05:06', 'AC-130', 'Messy execution');</span>
+<span class="s0">--</span>
+<span class="s0">-- SELECT * FROM Incident i JOIN Analyst a ON (i.analyst_address = a.address AND i.analyst_name = a.name);</span>
+<span class="s0">-- SELECT * FROM Analyses a JOIN Incident I on (a.instant = I.instant );</span>
+<span class="s0">-- SELECT * FROM Incident i JOIN Element e ON e.id=i.element_id;</span>
+
+<span class="s2">CREATE TABLE </span><span class="s1">Line_Incident</span>
+<span class="s1">(</span>
+    <span class="s1">point      </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) </span><span class="s2">NOT NULL,</span>
+    <span class="s1">instant    </span><span class="s2">TIMESTAMP    NOT NULL,</span>
+    <span class="s1">element_id </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">20</span><span class="s1">)  </span><span class="s2">NOT NULL,</span>
+    <span class="s2">PRIMARY KEY </span><span class="s1">(instant</span><span class="s2">, </span><span class="s1">element_id)</span><span class="s2">,</span>
+    <span class="s2">FOREIGN KEY </span><span class="s1">(instant</span><span class="s2">, </span><span class="s1">element_id) </span><span class="s2">REFERENCES </span><span class="s1">Incident (instant</span><span class="s2">, </span><span class="s1">element_id)</span>
+<span class="s1">)</span><span class="s2">;</span>
+
+<span class="s0">-- INSERT INTO Line_Incident VALUES ('x: 20, y: 25', '1999-01-09 04:05:06.000000', 'AC-130');</span>
+<span class="s0">-- SELECT * FROM Line_Incident li JOIN Incident i ON (li.element_id = i.element_id AND li.instant = i.instant) JOIN Element e ON e.id=i.element_id;</span>
+
+<span class="s2">CREATE TABLE </span><span class="s1">Line</span>
+<span class="s1">(</span>
+    <span class="s1">impedance  </span><span class="s2">INTEGER NOT NULL,</span>
+    <span class="s1">element_id </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">20</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s2">PRIMARY KEY </span><span class="s1">(element_id)</span><span class="s2">,</span>
+    <span class="s2">FOREIGN KEY </span><span class="s1">(element_id) </span><span class="s2">REFERENCES Element </span><span class="s1">(id)</span>
+<span class="s1">)</span><span class="s2">;</span>
+
+<span class="s2">CREATE TABLE </span><span class="s1">Bus_Bar</span>
+<span class="s1">(</span>
+    <span class="s1">voltage    </span><span class="s2">INTEGER NOT NULL,</span>
+    <span class="s1">element_id </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">20</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s2">PRIMARY KEY </span><span class="s1">(element_id)</span><span class="s2">,</span>
+    <span class="s2">FOREIGN KEY </span><span class="s1">(element_id) </span><span class="s2">REFERENCES Element </span><span class="s1">(id)</span>
+<span class="s1">)</span><span class="s2">;</span>
+
+
+<span class="s2">CREATE TABLE </span><span class="s1">Transformer</span>
+<span class="s1">(</span>
+    <span class="s1">primary_voltage   </span><span class="s2">INTEGER NOT NULL,</span>
+    <span class="s1">secondary_voltage </span><span class="s2">INTEGER NOT NULL,</span>
+    <span class="s1">element_id        </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">20</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s2">PRIMARY KEY </span><span class="s1">(element_id)</span><span class="s2">,</span>
+    <span class="s2">FOREIGN KEY </span><span class="s1">(element_id) </span><span class="s2">REFERENCES Element </span><span class="s1">(id)</span>
+<span class="s1">)</span><span class="s2">;</span>
+
+<span class="s2">CREATE TABLE </span><span class="s1">Line_Connection</span>
+<span class="s1">(</span>
+    <span class="s1">line_id      </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">20</span><span class="s1">) </span><span class="s2">NOT NULL,</span>
+    <span class="s1">bus_bar_1_id </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">20</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s1">bus_bar_2_id </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">20</span><span class="s1">) </span><span class="s2">CHECK </span><span class="s1">( bus_bar_1_id != bus_bar_2_id )</span><span class="s2">,</span>
+    <span class="s2">PRIMARY KEY </span><span class="s1">(line_id</span><span class="s2">, </span><span class="s1">bus_bar_1_id</span><span class="s2">, </span><span class="s1">bus_bar_2_id)</span><span class="s2">,</span>
+    <span class="s2">FOREIGN KEY </span><span class="s1">(line_id) </span><span class="s2">REFERENCES </span><span class="s1">Line (element_id)</span><span class="s2">,</span>
+    <span class="s2">FOREIGN KEY </span><span class="s1">(bus_bar_1_id) </span><span class="s2">REFERENCES </span><span class="s1">Bus_Bar (element_id)</span><span class="s2">,</span>
+    <span class="s2">FOREIGN KEY </span><span class="s1">(bus_bar_2_id) </span><span class="s2">REFERENCES </span><span class="s1">Bus_Bar (element_id)</span>
+<span class="s1">)</span><span class="s2">;</span>
+
+<span class="s0">-- INSERT INTO Line VALUES (50, 'AC-130');</span>
+<span class="s0">-- INSERT INTO Element VALUES ('B1');</span>
+<span class="s0">-- INSERT INTO Element VALUES ('B2');</span>
+<span class="s0">-- INSERT INTO Bus_Bar VALUES (50, 'B1');</span>
+<span class="s0">-- INSERT INTO Bus_Bar VALUES (70, 'B2');</span>
+<span class="s0">-- INSERT INTO Line_Connection VALUES ('AC-130', 'B1', 'B2');</span>
+
+<span class="s0">-- The voltage of the primary Bus Bar must match the primary voltage of the Transformer to which the Bus Bar is connected</span>
+<span class="s0">-- The voltage of the secondary Bus Bar must match the secondary voltage of the Transformer to which the Bus Bar is connected</span>
+<span class="s2">CREATE TABLE </span><span class="s1">Transformer_Connection</span>
+<span class="s1">(</span>
+    <span class="s1">transformer_id </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">20</span><span class="s1">) </span><span class="s2">NOT NULL,</span>
+    <span class="s1">bus_bar_1_id   </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">20</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s1">bus_bar_2_id   </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">20</span><span class="s1">) </span><span class="s2">CHECK </span><span class="s1">( bus_bar_1_id != bus_bar_2_id )</span><span class="s2">,</span>
+    <span class="s2">PRIMARY KEY </span><span class="s1">(transformer_id</span><span class="s2">, </span><span class="s1">bus_bar_1_id</span><span class="s2">, </span><span class="s1">bus_bar_2_id)</span><span class="s2">,</span>
+    <span class="s2">FOREIGN KEY </span><span class="s1">(transformer_id) </span><span class="s2">REFERENCES </span><span class="s1">Transformer (element_id)</span><span class="s2">,</span>
+    <span class="s2">FOREIGN KEY </span><span class="s1">(bus_bar_1_id) </span><span class="s2">REFERENCES </span><span class="s1">Bus_Bar (element_id)</span><span class="s2">,</span>
+    <span class="s2">FOREIGN KEY </span><span class="s1">(bus_bar_2_id) </span><span class="s2">REFERENCES </span><span class="s1">Bus_Bar (element_id)</span>
+<span class="s1">)</span><span class="s2">;</span>
+
+<span class="s0">-- INSERT INTO Element VALUES ('T1');</span>
+<span class="s0">-- INSERT INTO Transformer VALUES (50, 80, 'T1');</span>
+<span class="s0">-- INSERT INTO Transformer_Connection VALUES ('T1', 'B1', 'B2');</span>
+
+<span class="s2">CREATE TABLE </span><span class="s1">Located</span>
+<span class="s1">(</span>
+    <span class="s1">transformer_id </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">20</span><span class="s1">) </span><span class="s2">NOT NULL,</span>
+    <span class="s1">gps_coords     </span><span class="s2">VARCHAR</span><span class="s1">(</span><span class="s3">100</span><span class="s1">)</span><span class="s2">,</span>
+    <span class="s2">PRIMARY KEY </span><span class="s1">(transformer_id)</span><span class="s2">,</span>
+    <span class="s2">FOREIGN KEY </span><span class="s1">(transformer_id) </span><span class="s2">REFERENCES </span><span class="s1">Transformer (element_id)</span><span class="s2">,</span>
+    <span class="s2">FOREIGN KEY </span><span class="s1">(gps_coords) </span><span class="s2">REFERENCES </span><span class="s1">Substation (gps_coords)</span>
+<span class="s1">)</span><span class="s2">;</span>
+
+<span class="s0">-- INSERT INTO Person VALUES ('D Rose', 'Forte da Casa', '6+5+6', '259219516');</span>
+<span class="s0">-- INSERT INTO Supervisor VALUES ('D Rose', 'Forte da Casa');</span></pre>
+</body>
+</html>
