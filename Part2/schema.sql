@@ -16,13 +16,14 @@ DROP TABLE IF EXISTS Line_Connection CASCADE;
 DROP TABLE IF EXISTS Transformer_Connection CASCADE;
 DROP TABLE IF EXISTS Located CASCADE;
 DROP TYPE IF EXISTS Severity CASCADE;
+DROP TYPE IF EXISTS coordinates CASCADE;
 
 
 CREATE TABLE Person
 (
-    name    VARCHAR(100)        NOT NULL,
-    address VARCHAR(100)        NOT NULL,
-    phone   VARCHAR(15) UNIQUE  NOT NULL,
+    name    VARCHAR(80)        NOT NULL,
+    address VARCHAR(255)        NOT NULL,
+    phone   VARCHAR(15) UNIQUE,
     tax_id  VARCHAR(100) UNIQUE NOT NULL,
     PRIMARY KEY (name, address)
 );
@@ -30,16 +31,21 @@ CREATE TABLE Person
 -- Persons cannot analyse incidents regarding Elements of a Substation they supervises
 CREATE TABLE Supervisor
 (
-    name    VARCHAR(100) NOT NULL,
-    address VARCHAR(100) NOT NULL,
+    name    VARCHAR(80) NOT NULL,
+    address VARCHAR(255) NOT NULL,
     PRIMARY KEY (name, address),
     FOREIGN KEY (name, address) REFERENCES Person (name, address)
 );
-
+--create type coordinates
+CREATE TYPE coordinates AS
+(
+    longitude NUMERIC(8, 6),
+    latitude  NUMERIC(9, 6)
+);
 
 CREATE TABLE Substation
 (
-    gps_coords    VARCHAR(100) NOT NULL, -- TODO(use point or coordinates data type instead of varchar)
+    gps_coords    coordinates  NOT NULL,
     locality_name VARCHAR(100) NOT NULL,
     PRIMARY KEY (gps_coords)
 );
@@ -47,9 +53,9 @@ CREATE TABLE Substation
 
 CREATE TABLE Supervises
 (
-    supervisor_name    VARCHAR(100) NOT NULL,
-    supervisor_address VARCHAR(100) NOT NULL,
-    gps_coords         VARCHAR(100) NOT NULL,
+    supervisor_name    VARCHAR(80),
+    supervisor_address VARCHAR(255),
+    gps_coords         coordinates  NOT NULL,
     PRIMARY KEY (gps_coords),
     FOREIGN KEY (gps_coords) REFERENCES Substation (gps_coords),
     FOREIGN KEY (supervisor_name, supervisor_address) REFERENCES Supervisor (name, address)
@@ -58,8 +64,8 @@ CREATE TABLE Supervises
 -- Persons cannot analyse incidents regarding Elements of a Substation they supervises
 CREATE TABLE Analyst
 (
-    name    VARCHAR(100) NOT NULL,
-    address VARCHAR(100) NOT NULL,
+    name    VARCHAR(80) NOT NULL,
+    address VARCHAR(255) NOT NULL,
     PRIMARY KEY (name, address),
     FOREIGN KEY (name, address) REFERENCES Person (name, address)
 );
@@ -75,7 +81,7 @@ CREATE TABLE Element
 
 CREATE TABLE Incident
 (
-    description VARCHAR(100) NOT NULL,
+    description TEXT NOT NULL,
     instant     TIMESTAMP    NOT NULL,
     severity    Severity     NOT NULL,
     element_id  VARCHAR(20)  NOT NULL, -- Instead of refers_to. TODO(verify if it need to be changed)
@@ -86,11 +92,11 @@ CREATE TABLE Incident
 
 CREATE TABLE Analyses
 (
-    analyst_name    VARCHAR(100),
-    analyst_address VARCHAR(100),
-    instant         TIMESTAMP    NOT NULL,
-    element_id      VARCHAR(20)  NOT NULL,
-    report          VARCHAR(100) NOT NULL,
+    analyst_name    VARCHAR(80),
+    analyst_address VARCHAR(255),
+    instant         TIMESTAMP,
+    element_id      VARCHAR(20),
+    report          TEXT NOT NULL,
     PRIMARY KEY (instant, element_id),
     FOREIGN KEY (analyst_name, analyst_address) references Analyst (name, address),
     FOREIGN KEY (instant, element_id) REFERENCES Incident (instant, element_id)
@@ -99,7 +105,7 @@ CREATE TABLE Analyses
 
 CREATE TABLE Line_Incident
 (
-    point      VARCHAR(100) NOT NULL,
+    point      NUMERIC(3, 2) NOT NULL,
     instant    TIMESTAMP    NOT NULL,
     element_id VARCHAR(20)  NOT NULL,
     PRIMARY KEY (instant, element_id),
@@ -115,6 +121,7 @@ CREATE TABLE Line
     FOREIGN KEY (element_id) REFERENCES Element (id)
 );
 
+--TODO(Voltage integer or numeric?)
 CREATE TABLE Bus_Bar
 (
     voltage    INTEGER NOT NULL,
@@ -162,7 +169,7 @@ CREATE TABLE Transformer_Connection
 CREATE TABLE Located
 (
     transformer_id VARCHAR(20) NOT NULL,
-    gps_coords     VARCHAR(100),
+    gps_coords     coordinates NOT NULL,
     PRIMARY KEY (transformer_id),
     FOREIGN KEY (transformer_id) REFERENCES Transformer (element_id),
     FOREIGN KEY (gps_coords) REFERENCES Substation (gps_coords)
