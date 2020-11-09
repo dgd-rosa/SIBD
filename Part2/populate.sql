@@ -91,6 +91,18 @@ INSERT INTO Element
 VALUES ('B-789');
 INSERT INTO Bus_Bar
 VALUES (70, 'B-789');
+INSERT INTO Element
+VALUES ('L-111');
+INSERT INTO Line
+VALUES (50, 'L-111');
+INSERT INTO Element
+VALUES ('L-112');
+INSERT INTO Line
+VALUES (80, 'L-112');
+INSERT INTO Element
+VALUES ('T-001');
+INSERT INTO Transformer
+VALUES (100, 20, 'T-001');
 
 INSERT INTO Incident
 VALUES ('Failure in bus bar 2', '1999-01-20 04:05:06', 'low', 'B-789');
@@ -98,6 +110,16 @@ INSERT INTO Incident
 VALUES ('Failure in bus bar 2', '1999-01-21 04:05:06', 'medium', 'B-789');
 INSERT INTO Incident
 VALUES ('Failure in bus bar 2', '1999-01-22 04:05:06', 'high', 'B-789');
+INSERT INTO Incident
+VALUES ('Failure in Line', '2001-10-22 12:11:11', 'low', 'L-111');
+INSERT INTO Line_incident
+VALUES (20.2, '2001-10-22 12:11:11' , 'L-111');
+INSERT INTO Incident
+VALUES ('Failure in Line', '2002-10-22 12:11:11', 'low', 'L-112');
+INSERT INTO Line_incident
+VALUES (10.7, '2002-10-22 12:11:11' , 'L-112');
+INSERT INTO Incident
+VALUES ('Failure in Transformer', '2002-01-22 12:11:11', 'high', 'T-001');
 
 INSERT INTO Analyses
 VALUES ('Pedro', 'Alentenjo', '1999-01-20 04:05:06', 'B-789', 'Messy execution');
@@ -105,6 +127,15 @@ INSERT INTO Analyses
 VALUES ('Pedro', 'Alentenjo', '1999-01-21 04:05:06', 'B-789', 'Messy execution');
 INSERT INTO Analyses
 VALUES ('D Rose', 'Forte da Casa', '1999-01-22 04:05:06', 'B-789', 'Messy execution');
+INSERT INTO Analyses
+VALUES ('D Rose', 'Forte da Casa', '2002-10-22 12:11:11', 'L-112', 'Messy execution');
+INSERT INTO Analyses
+VALUES ('D Rose', 'Forte da Casa', '2002-01-22 12:11:11', 'T-001', 'Messy execution');
+INSERT INTO Analyses
+VALUES ('Pedro', 'Alentenjo', '2001-10-22 12:11:11', 'L-111', 'Messy execution');
+
+
+
 
 --inserting data for 3rd query
 INSERT INTO element
@@ -158,9 +189,10 @@ VALUES ((34, 600.65), 'New York');
 INSERT INTO located
 VALUES ('T-207',(34, 600.65));
 
+--4th querie
 INSERT INTO substation
 VALUES ((12,345), 'New York');
 INSERT INTO substation
-VALUES ((-34.23, 0), 'New York');
+VALUES ((-34.23, 0), 'Alverca');
 INSERT INTO substation
-VALUES ((0,0), 'New York');
+VALUES ((0,0), 'CHIADO');

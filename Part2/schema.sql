@@ -21,7 +21,7 @@ DROP TYPE IF EXISTS coordinates CASCADE;
 
 CREATE TABLE Person
 (
-    name    VARCHAR(80)        NOT NULL,
+    name    VARCHAR(80)         NOT NULL,
     address VARCHAR(255)        NOT NULL,
     phone   VARCHAR(15) UNIQUE,
     tax_id  VARCHAR(100) UNIQUE NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE Person
 -- Persons cannot analyse incidents regarding Elements of a Substation they supervises
 CREATE TABLE Supervisor
 (
-    name    VARCHAR(80) NOT NULL,
+    name    VARCHAR(80)  NOT NULL,
     address VARCHAR(255) NOT NULL,
     PRIMARY KEY (name, address),
     FOREIGN KEY (name, address) REFERENCES Person (name, address)
@@ -55,7 +55,7 @@ CREATE TABLE Supervises
 (
     supervisor_name    VARCHAR(80),
     supervisor_address VARCHAR(255),
-    gps_coords         coordinates  NOT NULL,
+    gps_coords         coordinates NOT NULL,
     PRIMARY KEY (gps_coords),
     FOREIGN KEY (gps_coords) REFERENCES Substation (gps_coords),
     FOREIGN KEY (supervisor_name, supervisor_address) REFERENCES Supervisor (name, address)
@@ -64,7 +64,7 @@ CREATE TABLE Supervises
 -- Persons cannot analyse incidents regarding Elements of a Substation they supervises
 CREATE TABLE Analyst
 (
-    name    VARCHAR(80) NOT NULL,
+    name    VARCHAR(80)  NOT NULL,
     address VARCHAR(255) NOT NULL,
     PRIMARY KEY (name, address),
     FOREIGN KEY (name, address) REFERENCES Person (name, address)
@@ -81,10 +81,10 @@ CREATE TABLE Element
 
 CREATE TABLE Incident
 (
-    description TEXT NOT NULL,
-    instant     TIMESTAMP    NOT NULL,
-    severity    Severity     NOT NULL,
-    element_id  VARCHAR(20)  NOT NULL, -- Instead of refers_to. TODO(verify if it need to be changed)
+    description TEXT        NOT NULL,
+    instant     TIMESTAMP   NOT NULL,
+    severity    Severity    NOT NULL,
+    element_id  VARCHAR(20) NOT NULL, -- Instead of refers_to. TODO(verify if it need to be changed)
     PRIMARY KEY (instant, element_id),
     FOREIGN KEY (element_id) REFERENCES Element (id)
 );
@@ -106,8 +106,8 @@ CREATE TABLE Analyses
 CREATE TABLE Line_Incident
 (
     point      NUMERIC(5, 2) NOT NULL,
-    instant    TIMESTAMP    NOT NULL,
-    element_id VARCHAR(20)  NOT NULL,
+    instant    TIMESTAMP     NOT NULL,
+    element_id VARCHAR(20)   NOT NULL,
     PRIMARY KEY (instant, element_id),
     FOREIGN KEY (instant, element_id) REFERENCES Incident (instant, element_id)
 );
