@@ -106,3 +106,61 @@ VALUES ('Pedro', 'Alentenjo', '1999-01-21 04:05:06', 'B-789', 'Messy execution')
 INSERT INTO Analyses
 VALUES ('D Rose', 'Forte da Casa', '1999-01-22 04:05:06', 'B-789', 'Messy execution');
 
+--inserting data for 3rd query
+INSERT INTO element
+VALUES ('T-202');
+INSERT INTO transformer
+VALUES (10, 100, 'T-202');
+
+INSERT INTO element
+VALUES ('T-203');
+INSERT INTO transformer
+VALUES (20, 200, 'T-203');
+
+INSERT INTO element
+VALUES ('T-204');
+INSERT INTO transformer
+VALUES (10, 100, 'T-204');
+
+INSERT INTO substation
+VALUES ('10 200 N', 'CHIADO');
+INSERT INTO located
+VALUES ('T-202','10 200 N');
+INSERT INTO located
+VALUES ('T-203','10 200 N');
+INSERT INTO located
+VALUES ('T-204','10 200 N');
+
+INSERT INTO element
+VALUES ('T-205');
+INSERT INTO transformer
+VALUES (10, 100, 'T-205');
+
+INSERT INTO element
+VALUES ('T-206');
+INSERT INTO transformer
+VALUES (10, 100, 'T-206');
+
+INSERT INTO substation
+VALUES ('200 Y 202', 'Ourique');
+INSERT INTO located
+VALUES ('T-205','200 Y 202');
+INSERT INTO located
+VALUES ('T-206','200 Y 202');
+
+INSERT INTO element
+VALUES ('T-207');
+INSERT INTO transformer
+VALUES (10, 100, 'T-207');
+
+INSERT INTO substation
+VALUES ('2110 200', 'New York');
+INSERT INTO located
+VALUES ('T-207','2110 200');
+
+INSERT INTO substation
+VALUES ('2120 100', 'New York');
+INSERT INTO substation
+VALUES ('4949 100', 'New York');
+INSERT INTO substation
+VALUES ('6996 100', 'New York');
