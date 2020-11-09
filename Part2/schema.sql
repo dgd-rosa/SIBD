@@ -105,7 +105,7 @@ CREATE TABLE Analyses
 
 CREATE TABLE Line_Incident
 (
-    point      NUMERIC(3, 2) NOT NULL,
+    point      NUMERIC(5, 2) NOT NULL,
     instant    TIMESTAMP    NOT NULL,
     element_id VARCHAR(20)  NOT NULL,
     PRIMARY KEY (instant, element_id),

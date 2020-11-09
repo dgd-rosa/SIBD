@@ -23,9 +23,9 @@ FROM Supervisor s
 
 
 INSERT INTO Substation
-VALUES ('12332', 'Lisbon');
+VALUES ((32.00, 119.00), 'Lisbon');
 INSERT INTO Supervises
-VALUES ('Pedro', 'Alentenjo', '12332');
+VALUES ('Pedro', 'Alentenjo', (32.00, 119.00));
 SELECT *
 FROM Supervises sup
          JOIN Supervisor s ON (sup.supervisor_name = s.name AND sup.supervisor_address = s.address)
@@ -55,9 +55,9 @@ FROM Incident i
 
 
 INSERT INTO Line_Incident
-VALUES ('x: 20, y: 25', '1999-01-09 04:05:06.000000', 'AC-130');
+VALUES (10.2, '1999-01-09 04:05:06.000000', 'AC-130');
 INSERT INTO Line_Incident
-VALUES ('x: 20, y: 25', '1999-01-08 04:05:06', 'AC-130');
+VALUES (35.32, '1999-01-08 04:05:06', 'AC-130');
 SELECT *
 FROM Line_Incident li
          JOIN Incident i ON (li.element_id = i.element_id AND li.instant = i.instant)
@@ -123,13 +123,13 @@ INSERT INTO transformer
 VALUES (10, 100, 'T-204');
 
 INSERT INTO substation
-VALUES ('10 200 N', 'CHIADO');
+VALUES ((12.3, 134), 'CHIADO');
 INSERT INTO located
-VALUES ('T-202','10 200 N');
+VALUES ('T-202', (12.3, 134));
 INSERT INTO located
-VALUES ('T-203','10 200 N');
+VALUES ('T-203', (12.3, 134));
 INSERT INTO located
-VALUES ('T-204','10 200 N');
+VALUES ('T-204',(12.3, 134));
 
 INSERT INTO element
 VALUES ('T-205');
@@ -142,11 +142,11 @@ INSERT INTO transformer
 VALUES (10, 100, 'T-206');
 
 INSERT INTO substation
-VALUES ('200 Y 202', 'Ourique');
+VALUES ((10.23, 200.2), 'Ourique');
 INSERT INTO located
-VALUES ('T-205','200 Y 202');
+VALUES ('T-205',(10.23, 200.2));
 INSERT INTO located
-VALUES ('T-206','200 Y 202');
+VALUES ('T-206',(10.23, 200.2));
 
 INSERT INTO element
 VALUES ('T-207');
@@ -154,13 +154,13 @@ INSERT INTO transformer
 VALUES (10, 100, 'T-207');
 
 INSERT INTO substation
-VALUES ('2110 200', 'New York');
+VALUES ((34, 600.65), 'New York');
 INSERT INTO located
-VALUES ('T-207','2110 200');
+VALUES ('T-207',(34, 600.65));
 
 INSERT INTO substation
-VALUES ('2120 100', 'New York');
+VALUES ((12,345), 'New York');
 INSERT INTO substation
-VALUES ('4949 100', 'New York');
+VALUES ((-34.23, 0), 'New York');
 INSERT INTO substation
-VALUES ('6996 100', 'New York');
+VALUES ((0,0), 'New York');
