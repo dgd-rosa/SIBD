@@ -189,7 +189,7 @@ VALUES ((34, 600.65), 'New York');
 INSERT INTO located
 VALUES ('T-207',(34, 600.65));
 
---4th querie
+--4th query
 INSERT INTO substation
 VALUES ((12,345), 'New York');
 INSERT INTO substation
