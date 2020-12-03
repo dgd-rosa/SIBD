@@ -1,5 +1,4 @@
 -- Person must appear in either supervisor and/or analyst
-
 DROP TABLE IF EXISTS Person CASCADE;
 DROP TABLE IF EXISTS Supervisor CASCADE;
 DROP TABLE IF EXISTS Substation CASCADE;

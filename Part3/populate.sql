@@ -5,11 +5,15 @@ INSERT INTO person VALUES ('Peter Warrior', 'Ourique', 8788, 3);
 INSERT INTO person VALUES ('Peter Warrior', 'Lisboa', 8778, 4);
 INSERT INTO person VALUES ('First Month', 'Lisbon', 456465, 5);
 INSERT INTO person VALUES ('First Month', 'Olhao', 456965, 6);
+INSERT INTO person VALUES ('Ronaldo', 'Porto Santo', 98193, 1235);
+INSERT INTO person VALUES ('Duarte', 'Tomar', 919193, 324);
 
 -- Create supervisor
 INSERT INTO supervisor VALUES ('D Rose', 'Porto covo');
 INSERT INTO supervisor VALUES ('Peter Warrior', 'Ourique');
 INSERT INTO supervisor VALUES ('First Month', 'Lisbon');
+INSERT INTO supervisor VALUES ('Ronaldo', 'Porto Santo');
+INSERT INTO supervisor VALUES ('Duarte', 'Tomar');
 
 -- Create analyst
 INSERT INTO analyst VALUES ('First Month', 'Lisbon');
@@ -22,6 +26,9 @@ INSERT INTO analyst VALUES ('Peter Warrior', 'Ourique');
 INSERT INTO substation VALUES (5, 5, 'Lisbon', 'D Rose', 'Porto covo');
 INSERT INTO substation VALUES (51, 52, 'Lisbon', 'D Rose', 'Porto covo');
 INSERT INTO substation VALUES (89, 40, 'Alentejo', 'Peter Warrior', 'Ourique');
+INSERT INTO substation VALUES (39.336775, -8.936379, 'Rio Maior', 'First Month', 'Lisbon');
+INSERT INTO substation VALUES (42.336775, -8.936379, 'NORTH', 'First Month', 'Lisbon');
+INSERT INTO substation VALUES (23, 34, 'Terra do Sol', 'Ronaldo', 'Porto Santo');
 
 
 -- Create element
@@ -62,6 +69,8 @@ INSERT INTO incident VALUES ('1999-01-21 04:05:06', 'B-1', 'Bus bar is not worki
 INSERT INTO incident VALUES ('1999-01-21 05:05:06', 'B-1', 'Bus bar is not working', 'high');
 -- INSERT INTO incident VALUES ('2020-01-21 05:05:06', 'B-1', 'Bus bar is not working', 'high');
 INSERT INTO incident VALUES ('2021-01-21 04:05:06', 'T-1', 'Transformer broke', 'high');
+INSERT INTO incident VALUES ('2021-01-21 04:01:06', 'T-1', 'Transformer broke', 'high');
+INSERT INTO incident VALUES ('2021-01-21 14:05:06', 'T-1', 'Transformer broke', 'high');
 
 -- Create line incident
 INSERT INTO lineincident VALUES ('1999-01-20 04:05:06', 'L-1', '555.05');
