@@ -12,9 +12,9 @@ HAVING COUNT(*) > 0;
 -- 1. Who are the analysts that have analyzed every incident of element ‘B-789’?
 SELECT name, address
 FROM analyses
-WHERE id = 'B-1'
+WHERE id = 'B-789'
 GROUP BY (name, address)
-HAVING COUNT(*) = (SELECT COUNT(*) FROM incident WHERE incident.id = 'B-1');
+HAVING COUNT(*) = (SELECT COUNT(*) FROM incident WHERE incident.id = 'B-789');
 
 --2. Who are the supervisors that do not supervise substations south of Rio Maior
 --(Rio Maior coordinates: 39.336775, -8.936379)
