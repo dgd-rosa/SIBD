@@ -1,11 +1,21 @@
 #!/usr/bin/python3
-import psycopg2
+import psycopg2, cgi
 import login
+
+
+form = cgi.FieldStorage()
+
+gpslat = form.getvalue('gpslat')
+gpslong = form.getvalue('gpslong')
+sname = form.getvalue('sname')
+saddress = form.getvalue('saddress')
+
+
 
 print('Content-type:text/html\n\n')
 print('<html>')
 print('<head>')
-print('<title>Bus Bar List</title>')
+print('<title> Update Supervisor</title>')
 print('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">')
 print('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">')
 print('</head>')
@@ -17,55 +27,30 @@ try:
     connection = psycopg2.connect(login.credentials)
     cursor = connection.cursor()
     print('<div class="container">')
-    print('<h1> Bus Bar List </h1>')
+    print('<h1> Update Supervisor </h1>')
 
-    # Making query
-    sql = 'SELECT * FROM busbar;'
-    cursor.execute(sql)
-    result = cursor.fetchall()
-    num = len(result)
+    # Updating the supervisor
+    sql_update_supervisor = "UPDATE substation SET sname = %(sname)s, saddress = %(saddress)s WHERE gpslat=%(gpslat)s AND gpslong=%(gpslong)s;"
 
-    # Displaying results
-    print('<p> ' + str(num) + ' records retrieved:</p>')
-    print('<table class="table table-striped table-borderless table-hover">')
-    print('<thead class="thead-dark">')
-    print('<tr><th scope="col">id</th><th scope="col">voltage</th><th scope="col"></th></tr>')
-    print('</thead>')
-    print('<tbody>')
-    for row in result:
-        print('<tr scope="row">')
-        for value in row:
-            # The string has the {}, the variables inside format() will replace the {}
-            print('<td>')
-            print(value)
-            print('</td>')
-        
-        print('<td>')
-        print('<a href="delete_bus_bar.cgi?id=' + row[0] + '">')
-        print('<i class="fa fa-minus"></i>')
-        print('</a>')
-        print('</td>')
-        
-        print('</tr>')
-    print('</tbody>')
-    print('</table>')
+    # Execute
+    cursor.execute(sql_update_supervisor, {'sname': sname, 'saddress': saddress, 'gpslat': gpslat, 'gpslong': gpslong})
 
-    #Insert button
-    print('<a href="insert_bus_bar.cgi" >')
-    print('<i class="fa fa-plus fa-4x"></i>')
-    print('</a>')
+    connection.commit()
+
+    #Display success message and return to home button
+    print('<h3>Your supervisor was updated successfully</h3>')
+    print('<a href="list_substation.cgi">Return home</a>')
 
     print('</div>')
 
     #Closing connection
-    cursor.c/lose()
+    cursor.close()
 except Exception as e:
     print('<h1>An error occurred.</h1>')
     print('<p>' + str(e) + '</p>')
 finally:
     if connection is not None:
         connection.close()
-
 
 print('<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>')
 print('<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>')

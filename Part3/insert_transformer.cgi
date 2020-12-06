@@ -7,6 +7,7 @@ print('<html>')
 print('<head>')
 print('<title>Transformer Insertion</title>')
 print('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">')
+print('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">')
 print('</head>')
 print('<body>')
 
@@ -15,19 +16,22 @@ try:
     # Creating connection
     connection = psycopg2.connect(login.credentials)
     cursor = connection.cursor()
+    print('<div class="container">')
     print('<h1> Transformer Insertion </h1>')
 
    # The form will send the info needed for the SQL query
     print('<form action="create_transformer.cgi" method="post">')
-    print('<p>Id: <input type="text" name="id" required/></p>')
-    print('<p>pv: <input type="number" name="pv"/></p>')
-    print('<p>sv: <input type="number" name="sv"/></p>')
-    print('<p>gpslat: <input type="number" name="gpslat" /></p>')
-    print('<p>gpslong: <input type="number" name="gpslong" /></p>')
-    print('<p>pbbid: <input type="text" name="pbbid"/></p>')
-    print('<p>sbbid: <input type="text" name="sbbid"/></p>')
-    print('<p><input type="submit" value="Submit"/></p>')
+    print('<p>Id: <input class="form-control" type="text" name="id" required/></p>')
+    print('<p>pv: <input class="form-control" type="number" name="pv"/></p>')
+    print('<p>sv: <input class="form-control" type="number" name="sv"/></p>')
+    print('<p>gpslat: <input class="form-control" type="number" name="gpslat" /></p>')
+    print('<p>gpslong: <input class="form-control" type="number" name="gpslong" /></p>')
+    print('<p>pbbid: <input class="form-control" type="text" name="pbbid"/></p>')
+    print('<p>sbbid: <input class="form-control" type="text" name="sbbid"/></p>')
+    print('<p><input class="btn btn-primary" type="submit" value="Submit"/></p>')
     print('</form>')
+
+    print('</div>')
 
     #Closing connection
     cursor.close()
@@ -38,5 +42,7 @@ finally:
     if connection is not None:
         connection.close()
 
+print('<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>')
+print('<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>')
 print('</body>')
 print('</html>')

@@ -7,6 +7,7 @@ print('<html>')
 print('<head>')
 print('<title>Transformer List</title>')
 print('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">')
+print('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">')
 print('</head>')
 print('<body>')
 
@@ -15,6 +16,7 @@ try:
     # Creating connection
     connection = psycopg2.connect(login.credentials)
     cursor = connection.cursor()
+    print('<div class="container">')
     print('<h1> Transformer List </h1>')
 
     # Making query
@@ -25,18 +27,13 @@ try:
 
     # Displaying results
     print('<p> ' + str(num) + ' records retrieved:</p>')
-    print('<table border="5">')
-    print('''<tr>
-            <th>id</th>
-            <th>pv</th>
-            <th>sv</th>
-            <th>gpslat</th>
-            <th>gpslong</th>
-            <th>pbbid</th>
-            <th>sbbid</th>
-        </tr>''')
+    print('<table class="table table-striped table-borderless table-hover">')
+    print('<thead class="thead-dark">')
+    print('<tr><th scope="col">id</th><th scope="col">pv</th><th scope="col">sv</th><th scope="col">gpslat</th><th scope="col">gpslong</th><th scope="col">pbbid</th><th scope="col">sbbid</th><th scope="col"></th></tr>')
+    print('</thead>')
+    print('<tbody>')
     for row in result:
-        print('<tr>')
+        print('<tr scope="row">')
         for value in row:
             # The string has the {}, the variables inside format() will replace the {}
             print('<td>')
@@ -50,12 +47,15 @@ try:
         print('</td>')
         
         print('</tr>')
+    print('</tbody>')
     print('</table>')
 
     #Insert button
     print('<a href="insert_transformer.cgi" >')
     print('<i class="fa fa-plus fa-4x"></i>')
     print('</a>')
+
+    print('</div>')
 
     #Closing connection
     cursor.close()
@@ -66,5 +66,7 @@ finally:
     if connection is not None:
         connection.close()
 
+print('<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>')
+print('<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>')
 print('</body>')
 print('</html>')
