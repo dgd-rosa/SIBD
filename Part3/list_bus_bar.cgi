@@ -2,7 +2,7 @@
 import psycopg2
 import login
 
-# print('Content-type:text/html\n\n')
+print('Content-type:text/html\n\n')
 print('<html>')
 print('<head>')
 print('<title>Bus Bar List</title>')
@@ -13,7 +13,7 @@ connection = None
 try:
     # Creating connection
     connection = psycopg2.connect(login.credentials)
-    print('<p>Connected to Postgres with: {}.</p>'.format(login.credentials[:51]))
+    print('<p>Connected to Postgres with: ' + login.credentials[:51] + '.</p>')
     cursor = connection.cursor()
 
     # Making query
@@ -23,7 +23,7 @@ try:
     num = len(result)
 
     # Displaying results
-    print('<p>{} records retrieved:</p>'.format(num))
+    print('<p> ' + str(num) + ' records retrieved:</p>')
     print('<table border="5">')
     print('''<tr>
             <th>id</th>
@@ -33,7 +33,9 @@ try:
         print('<tr>')
         for value in row:
             # The string has the {}, the variables inside format() will replace the {}
-            print('<td>{}</td>'.format(value))
+            print('<td>')
+            print(value)
+            print('</td>')
         print('</tr>')
     print('</table>')
     #Closing connection
@@ -42,7 +44,7 @@ try:
     print('<p>Test completed successfully.</p>')
 except Exception as e:
     print('<h1>An error occurred.</h1>')
-    print('<p>{}</p>'.format(e))
+    print('<p>' + str(e) + '</p>')
 finally:
     if connection is not None:
         connection.close()
