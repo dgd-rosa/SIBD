@@ -1,20 +1,18 @@
 #!/usr/bin/python3
-import psycopg2, cgi
+import psycopg2
+#The following imports are needed for a foldered strcutre
+
+import sys
+sys.path.insert(1, '/afs/.ist.utl.pt/users/0/5/ist190105/web')
+
 import login
-
-
-form = cgi.FieldStorage()
-
-gpslat = form.getvalue('gpslat')
-gpslong = form.getvalue('gpslong')
 
 print('Content-type:text/html\n\n')
 print('<html>')
 print('<head>')
-print('<title>Substation Deletion</title>')
+print('<title>Transformer Insertion</title>')
 print('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">')
 print('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">')
-
 print('</head>')
 print('<body>')
 
@@ -23,24 +21,22 @@ try:
     # Creating connection
     connection = psycopg2.connect(login.credentials)
     cursor = connection.cursor()
-    print('<h1> Substation Deletion </h1>')
+    print('<div class="container">')
+    print('<h1> Transformer Insertion </h1>')
 
-    #Delete corresponding analyses
-    sql_delete_substation = "DELETE FROM substation WHERE gpslat=%(gpslat)s and gpslong=%(gpslong)s ;"
-    #Delete corresponding transformers
-    sql_delete_transformer = "DELETE FROM transformer WHERE gpslat=%(gpslat)s and gpslong=%(gpslong)s;"
+   # The form will send the info needed for the SQL query
+    print('<form action="create_transformer.cgi" method="post">')
+    print('<p>Id: <input class="form-control" type="text" name="id" required/></p>')
+    print('<p>pv: <input class="form-control" type="number" name="pv"/></p>')
+    print('<p>sv: <input class="form-control" type="number" name="sv"/></p>')
+    print('<p>gpslat: <input class="form-control" type="number" name="gpslat" /></p>')
+    print('<p>gpslong: <input class="form-control" type="number" name="gpslong" /></p>')
+    print('<p>pbbid: <input class="form-control" type="text" name="pbbid"/></p>')
+    print('<p>sbbid: <input class="form-control" type="text" name="sbbid"/></p>')
+    print('<p><input class="btn btn-primary" type="submit" value="Submit"/></p>')
+    print('</form>')
 
-    #Execute
-    cursor.execute(sql_delete_transformer, {'gpslat': gpslat, 'gpslong': gpslong})
-    cursor.execute(sql_delete_substation, {'gpslat': gpslat, 'gpslong': gpslong})
-    
-
-    connection.commit()
-
-
-    #Display success message and return to home button
-    print('<h3>Your Substation was deleted successfully</h3>')
-    print('<a href="list_substation.cgi">Return home</a>')
+    print('</div>')
 
     #Closing connection
     cursor.close()

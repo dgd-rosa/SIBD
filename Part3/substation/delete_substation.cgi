@@ -1,20 +1,25 @@
 #!/usr/bin/python3
 import psycopg2, cgi
+#The following imports are needed for a foldered strcutre
+
+import sys
+sys.path.insert(1, '/afs/.ist.utl.pt/users/0/5/ist190105/web')
+
 import login
 
 
 form = cgi.FieldStorage()
 
-id = form.getvalue('id')
-voltage = form.getvalue('voltage')
-
+gpslat = form.getvalue('gpslat')
+gpslong = form.getvalue('gpslong')
 
 print('Content-type:text/html\n\n')
 print('<html>')
 print('<head>')
-print('<title>Bus Bar Created</title>')
+print('<title>Substation Deletion</title>')
 print('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">')
 print('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">')
+
 print('</head>')
 print('<body>')
 
@@ -23,25 +28,24 @@ try:
     # Creating connection
     connection = psycopg2.connect(login.credentials)
     cursor = connection.cursor()
-    print('<div class="container">')
-    print('<h1> Bus Bar Creation </h1>')
+    print('<h1> Substation Deletion </h1>')
 
-    # Creating an element
-    sql_create_element = "INSERT INTO element VALUES(%(id)s);"
-    ## Creating a busbar
-    sql_create_busbar = "INSERT INTO busbar VALUES(%(id)s, %(voltage)s);"
+    #Delete corresponding analyses
+    sql_delete_substation = "DELETE FROM substation WHERE gpslat=%(gpslat)s and gpslong=%(gpslong)s ;"
+    #Delete corresponding transformers
+    sql_delete_transformer = "DELETE FROM transformer WHERE gpslat=%(gpslat)s and gpslong=%(gpslong)s;"
 
-    # Execute
-    cursor.execute(sql_create_element, {'id': id})
-    cursor.execute(sql_create_busbar, {'id': id, 'voltage': voltage})
+    #Execute
+    cursor.execute(sql_delete_transformer, {'gpslat': gpslat, 'gpslong': gpslong})
+    cursor.execute(sql_delete_substation, {'gpslat': gpslat, 'gpslong': gpslong})
+    
 
     connection.commit()
 
-    #Display success message and return to home button
-    print('<h3>Your Bus Bar was created successfully</h3>')
-    print('<a href="list_bus_bar.cgi">Return home</a>')
 
-    print('</div>')
+    #Display success message and return to home button
+    print('<h3>Your Substation was deleted successfully</h3>')
+    print('<a href="list_substation.cgi">Return home</a>')
 
     #Closing connection
     cursor.close()

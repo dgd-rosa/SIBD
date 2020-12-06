@@ -1,5 +1,10 @@
 #!/usr/bin/python3
 import psycopg2
+#The following imports are needed for a foldered strcutre
+
+import sys
+sys.path.insert(1, '/afs/.ist.utl.pt/users/0/5/ist190105/web')
+
 import login
 
 print('Content-type:text/html\n\n')

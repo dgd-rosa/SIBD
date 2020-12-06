@@ -1,22 +1,26 @@
 #!/usr/bin/python3
 import psycopg2, cgi
+#The following imports are needed for a foldered strcutre
+
+import sys
+sys.path.insert(1, '/afs/.ist.utl.pt/users/0/5/ist190105/web')
+
 import login
 
 
 form = cgi.FieldStorage()
 
-gpslat = form.getvalue('gpslat')
-gpslong = form.getvalue('gpslong')
-sname = form.getvalue('sname')
-saddress = form.getvalue('saddress')
+instant = form.getvalue('instant')
+id = form.getvalue('id')
+description =  form.getvalue('description')
+
 
 print('Content-type:text/html\n\n')
 print('<html>')
 print('<head>')
-print('<title>Substation Deletion</title>')
+print('<title> Update Incident</title>')
 print('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">')
 print('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">')
-
 print('</head>')
 print('<body>')
 
@@ -25,30 +29,39 @@ try:
     # Creating connection
     connection = psycopg2.connect(login.credentials)
     cursor = connection.cursor()
-    
     print('<div class="container">')
-    print('<h1> Supervisor change for')
-    print(gpslat)
-    print(' and ')
-    print(gpslong)
-    print('</h1>')
+    print('<h1> Update Incident </h1>')
 
-    # The form will send the info needed for the SQL query
-    print('<form action="update_supervisor_database.cgi" method="post">')
-    print('<p><input class="form-control" type="hidden" name="gpslat" value="')
-    print(gpslat)
-    print('"/></p>')
-    print('<p><input class="form-control" type="hidden" name="gpslong" value="')
-    print(gpslong)
-    print('"/></p>')
-    print('<p>sname: <input class="form-control" type="text" name="sname" placeholder="Current value: ')
-    print(sname)
-    print('"/></p>')
-    print('<p>saddress: <input class="form-control" type="text" name="saddress" placeholder="Current value: ')
-    print(saddress)
-    print('"/></p>')
-    print('<p><input class="btn btn-primary" type="submit" value="Submit"/></p>')
-    print('</form>')
+    # # Updating the supervisor
+    # sql_update_incident = "UPDATE incident SET description = %(description)s WHERE instant = %(instant)s AND id = %(id)s;"
+
+    # # Execute
+    # cursor.execute(sql_update_incident, {'description': description, 'instant': instant, 'id': id})
+
+    # connection.commit()
+
+    # sql = "SELECT * FROM incident WHERE instant = '" + instant + "';"
+    sql = "SELECT * FROM incident WHERE instant = %(instant)s AND id = %(id)s;"
+    cursor.execute(sql, {'instant': instant, 'id': id})
+    result = cursor.fetchall()
+    
+    print('<p>')
+    print(id)
+    print('</p>')
+
+    print('<p>')
+    print(instant)
+    print('</p>')
+
+    print('<p>')
+    print(result)
+    print('</p>')
+
+    
+
+    #Display success message and return to home button
+    print('<h3>Your incident\'s description was updated successfully</h3>')
+    print('<a href="list_incident.cgi">Return home</a>')
 
     print('</div>')
 
