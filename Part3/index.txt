@@ -1,2 +1,14 @@
--- 6.1
+6.1)
+- For the WHERE clause with pv = <some_value>, we will create an index in the pv of the transformer of type HASH, since HASH will group elements with the same pv value.
+- For the GROUP BY clause with locality, we will use a BTREE index in the locality of the substation. This will give better results since BTREE has the concept of range which is 
+    preferable in a GROUP BY because we know what values exist, meannwhile in the HASH we could be looking at a bucket for locality='Lisbon' and wouldn't know what the next one would be.
+
+
+6.2)
+- For the WHERE clause with instant BETWEEN <ts1> AND <ts2>, we will create an index in the instant of the incident of type BTREE. We want to collect values within a range so a BTEE 
+    is ideal since it groups elements with order, while HASH would group the elements with the same values but finding a range would still be slow.
+- For the LIKE clause we use a BTREE since we want to do prefix matching, we will have some order and the descriptions with the same prefix will be next to each other.
+
+
+
 
