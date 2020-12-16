@@ -12,6 +12,8 @@ DROP TABLE IF EXISTS busbar cascade;
 DROP TABLE IF EXISTS element cascade;
 DROP TABLE IF EXISTS substation cascade;
 DROP TABLE IF EXISTS analyst cascade;
+
+
 DROP TABLE IF EXISTS supervisor cascade;
 DROP TABLE IF EXISTS person cascade;
 
