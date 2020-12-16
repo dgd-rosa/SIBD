@@ -25,13 +25,28 @@ try:
     print('<div class="container">')
     print('<h1> Substation Insertion </h1>')
 
+    sql = 'SELECT * FROM supervisor;'
+    cursor.execute(sql)
+    result = cursor.fetchall()
+
    # The form will send the info needed for the SQL query
     print('<form action="create_substation.cgi" method="post">')
-    print('<p>gpslat: <input class="form-control" type="number" name="gpslat" placeholder="Enter GPS Latitude" /></p>')
-    print('<p>gpslong: <input class="form-control" type="number" name="gpslong" placeholder="Enter GPS Longitude" /></p>')
+    print('<p>gpslat: <input class="form-control" type="number" step=any name="gpslat" placeholder="Enter GPS Latitude" /></p>')
+    print('<p>gpslong: <input class="form-control" type="number" step=any name="gpslong" placeholder="Enter GPS Longitude" /></p>')
     print('<p>locality: <input class="form-control" type="text" name="locality" placeholder="Enter Substation Locality"/></p>')
-    print('<p>sname: <input class="form-control" type="text" name="sname" placeholder="Enter Supervisor Name"/></p>')
-    print('<p>saddress: <input class="form-control" type="text" name="saddress" placeholder="Enter Supervisor Address"/></p>')
+    print('<br>')
+
+    print('<div>')
+    print('<select class="form-control" name="name_address" id="drop1" required>')
+    print('<option value="" selected disabled hidden>Select supervisor</option>')
+    for row in result:
+        print('<option value="' + row[0] + ' &&& ' + row[1] + '">' + row[0] + ', ' + row[1] + '</option>')
+    print('</select>')
+    print('</div>')
+
+    print('<br>')
+
+
     print('<p><input class="btn btn-primary" type="submit" value="Submit"/></p>')
     print('</form>')
 
@@ -41,7 +56,7 @@ try:
     cursor.close()
 except Exception as e:
     print('<h1>An error occurred.</h1>')
-    print('<p>' + str(e) + '</p>')
+    
 finally:
     if connection is not None:
         connection.close()

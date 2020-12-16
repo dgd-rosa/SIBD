@@ -12,8 +12,7 @@ form = cgi.FieldStorage()
 
 gpslat = form.getvalue('gpslat')
 gpslong = form.getvalue('gpslong')
-sname = form.getvalue('sname')
-saddress = form.getvalue('saddress')
+name_address = form.getvalue('name_address')
 
 
 
@@ -37,6 +36,8 @@ try:
     # Updating the supervisor
     sql_update_supervisor = "UPDATE substation SET sname = %(sname)s, saddress = %(saddress)s WHERE gpslat=%(gpslat)s AND gpslong=%(gpslong)s;"
 
+    sname, saddress = name_address.split(" &&& ")
+    
     # Execute
     cursor.execute(sql_update_supervisor, {'sname': sname, 'saddress': saddress, 'gpslat': gpslat, 'gpslong': gpslong})
 
@@ -52,7 +53,7 @@ try:
     cursor.close()
 except Exception as e:
     print('<h1>An error occurred.</h1>')
-    print('<p>' + str(e) + '</p>')
+    
 finally:
     if connection is not None:
         connection.close()

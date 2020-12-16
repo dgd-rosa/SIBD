@@ -30,6 +30,10 @@ try:
     # Creating connection
     connection = psycopg2.connect(login.credentials)
     cursor = connection.cursor()
+
+    sql = 'SELECT * FROM supervisor;'
+    cursor.execute(sql)
+    result = cursor.fetchall()
     
     print('<div class="container">')
     print('<h1> Supervisor change for')
@@ -46,12 +50,20 @@ try:
     print('<p><input class="form-control" type="hidden" name="gpslong" value="')
     print(gpslong)
     print('"/></p>')
-    print('<p>sname: <input class="form-control" type="text" name="sname" placeholder="Current value: ')
-    print(sname)
-    print('"/></p>')
-    print('<p>saddress: <input class="form-control" type="text" name="saddress" placeholder="Current value: ')
-    print(saddress)
-    print('"/></p>')
+
+    print('<br>')
+
+    print('<div>')
+    print('<label>Select new supervisor</label>')
+    print('<select class="form-control" name="name_address" id="drop1" required>')
+    print('<option value="" selected disabled hidden> Current Value: ' + sname + ', ' + saddress + '</option>')
+    for row in result:
+        print('<option value="' + row[0] + ' &&& ' + row[1] + '">' + row[0] + ', ' + row[1] + '</option>')
+    print('</select>')
+    print('</div>')
+
+    print('<br>')
+
     print('<p><input class="btn btn-primary" type="submit" value="Submit"/></p>')
     print('</form>')
 
@@ -61,7 +73,7 @@ try:
     cursor.close()
 except Exception as e:
     print('<h1>An error occurred.</h1>')
-    print('<p>' + str(e) + '</p>')
+    
 finally:
     if connection is not None:
         connection.close()

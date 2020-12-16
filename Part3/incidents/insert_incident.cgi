@@ -24,10 +24,26 @@ try:
     print('<div class="container">')
     print('<h1> Incident Insertion </h1>')
 
+    sql = 'SELECT * FROM element WHERE id NOT IN (SELECT id FROM line);'
+    cursor.execute(sql)
+    result = cursor.fetchall()
+
+
    # The form will send the info needed for the SQL query
     print('<form action="create_incident.cgi" method="post">')
     print('<p>instant: <input class="form-control" type="text" name="instant" required/></p>')
-    print('<p>id: <input class="form-control" type="text" name="id" required/></p>')
+
+    print('<div>')
+    print('<select class="form-control" name="id" id="drop1" required>')
+    print('<option value="" selected disabled hidden>Select element id</option>')
+    for row in result:
+        print('<option value="' + row[0] + '">' + row[0] + '</option>')
+    print('</select>')
+    print('</div>')
+
+    print('<br>')
+    
+
     print('<p>description: <input class="form-control" type="text" name="description" required/></p>')
     print('<p>severity: <input class="form-control" type="text" name="severity" required/></p>')
     print('<p><input class="btn btn-primary" type="submit" value="Submit"/></p>')
@@ -38,7 +54,7 @@ try:
     cursor.close()
 except Exception as e:
     print('<h1>An error occurred.</h1>')
-    print('<p>' + str(e) + '</p>')
+    
 finally:
     if connection is not None:
         connection.close()

@@ -13,8 +13,7 @@ form = cgi.FieldStorage()
 gpslat = form.getvalue('gpslat')
 gpslong = form.getvalue('gpslong')
 locality =  form.getvalue('locality')
-sname =  form.getvalue('sname')
-saddress =  form.getvalue('saddress')
+name_address =  form.getvalue('name_address')
 
 print('Content-type:text/html\n\n')
 print('<html>')
@@ -35,7 +34,8 @@ try:
 
     # Creating an substation
     sql_create_substation = "INSERT INTO substation VALUES( %(gpslat)s, %(gpslong)s, %(locality)s, %(sname)s,%(saddress)s);"
-  
+    
+    sname, saddress = name_address.split(" &&& ")
 
     # Execute
     cursor.execute(sql_create_substation, { 'gpslat': gpslat, 'gpslong': gpslong, 'locality': locality, 'sname': sname,'saddress':saddress })
@@ -51,7 +51,7 @@ try:
     cursor.close()
 except Exception as e:
     print('<h1>An error occurred.</h1>')
-    print('<p>' + str(e) + '</p>')
+    
 finally:
     if connection is not None:
         connection.close()

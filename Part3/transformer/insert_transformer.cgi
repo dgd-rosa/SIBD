@@ -24,15 +24,51 @@ try:
     print('<div class="container">')
     print('<h1> Transformer Insertion </h1>')
 
+    sql = 'SELECT * FROM busbar;'
+    cursor.execute(sql)
+    result_bb = cursor.fetchall()
+
+    sql = 'SELECT * FROM substation;'
+    cursor.execute(sql)
+    result_s = cursor.fetchall()
+
+
    # The form will send the info needed for the SQL query
     print('<form action="create_transformer.cgi" method="post">')
     print('<p>Id: <input class="form-control" type="text" name="id" required/></p>')
-    print('<p>pv: <input class="form-control" type="number" name="pv"/></p>')
-    print('<p>sv: <input class="form-control" type="number" name="sv"/></p>')
-    print('<p>gpslat: <input class="form-control" type="number" name="gpslat" /></p>')
-    print('<p>gpslong: <input class="form-control" type="number" name="gpslong" /></p>')
-    print('<p>pbbid: <input class="form-control" type="text" name="pbbid"/></p>')
-    print('<p>sbbid: <input class="form-control" type="text" name="sbbid"/></p>')
+
+    print('<div>')
+    print('<select class="form-control" name="gps" id="drop0" required>')
+    print('<option value="" selected disabled hidden>Select substation</option>')
+    for row in result_s:
+        print('<option value="' + str(row[0]) + ' &&& ' + str(row[1]) + '"> gpslat: ' + str(row[0]) + ' gpslong: ' + str(row[1]) + '</option>')
+    print('</select>')
+    print('</div>')
+
+    print('<br>')
+    
+    
+    print('<div>')
+    print('<select class="form-control" name="pbbid_pv" id="drop1" required>')
+    print('<option value="" selected disabled hidden>Select primary busbar</option>')
+    for row in result_bb:
+        print('<option value="' + row[0] + ' &&& ' + str(row[1]) + '"> id: ' + row[0] + ' voltage: ' + str(row[1]) + '</option>')
+    print('</select>')
+    print('</div>')
+
+    print('<br>')
+
+    print('<div>')
+    print('<select class="form-control" name="sbbid_sv" id="drop2" required>')
+    print('<option value="" selected disabled hidden>Select secondary busbar</option>')
+    for row in result_bb:
+        print('<option value="' + row[0] + ' &&& ' + str(row[1]) + '"> id: ' + row[0] + ' voltage: ' + str(row[1]) + '</option>')
+    print('</select>')
+    print('</div>')
+
+    print('<br>')
+
+
     print('<p><input class="btn btn-primary" type="submit" value="Submit"/></p>')
     print('</form>')
 
@@ -42,7 +78,7 @@ try:
     cursor.close()
 except Exception as e:
     print('<h1>An error occurred.</h1>')
-    print('<p>' + str(e) + '</p>')
+    
 finally:
     if connection is not None:
         connection.close()

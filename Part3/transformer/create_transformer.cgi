@@ -6,18 +6,16 @@ import sys
 sys.path.insert(1, '/afs/.ist.utl.pt/users/0/5/ist190105/web')
 
 import login
+from decimal import Decimal
+
 
 
 form = cgi.FieldStorage()
 
 id = form.getvalue('id')
-pv = form.getvalue('pv')
-sv = form.getvalue('sv')
-gpslat = form.getvalue('gpslat')
-gpslong = form.getvalue('gpslong')
-pbbid = form.getvalue('pbbid')
-sbbid = form.getvalue('sbbid')
-
+pbbid_pv = form.getvalue('pbbid_pv')
+sbbid_sv = form.getvalue('sbbid_sv')
+gps = form.getvalue('gps')
 
 print('Content-type:text/html\n\n')
 print('<html>')
@@ -35,6 +33,15 @@ try:
     cursor = connection.cursor()
     print('<div class="container">')
     print('<h1> Transformer Creation </h1>')
+
+    pbbid, pv = pbbid_pv.split(" &&& ")
+    sbbid, sv = sbbid_sv.split(" &&& ")
+    gpslat, gpslong = gps.split(" &&& ")
+
+    pv = Decimal(pv)
+    sv = Decimal(sv)
+    gpslat = Decimal(gpslat)
+    gpslong = Decimal(gpslong)
 
     # Creating an element
     sql_create_element = "INSERT INTO element VALUES( %(id)s );"
@@ -58,6 +65,7 @@ try:
 except Exception as e:
     print('<h1>An error occurred.</h1>')
     print('<p>' + str(e) + '</p>')
+    
 finally:
     if connection is not None:
         connection.close()
