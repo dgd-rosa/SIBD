@@ -3,7 +3,7 @@ import psycopg2, cgi
 #The following imports are needed for a foldered strcutre
 
 import sys
-sys.path.insert(1, '/afs/.ist.utl.pt/users/0/5/ist190105/web')
+sys.path.insert(1, '/afs/.ist.utl.pt/users/0/5/ist190105/web/sibd')
 
 import login
 

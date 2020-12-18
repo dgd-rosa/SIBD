@@ -55,9 +55,3 @@ FROM (SELECT a.name, a.address, i.instant, sb.gpslong, sb.gpslat, t.id, i.severi
          JOIN d_location dl ON (I.gpslong = dl.longitude AND I.gpslat = dl.latitude)
          JOIN d_element e ON e.element_id = I.id;
 
---          JOIN d_element e ON i.id = e.element_id
---          JOIN analyses a on i.instant = a.instant and i.id = a.id
---          JOIN d_reporter dr ON a.address = dr.address
---          JOIN transformer t ON i.id = t.id
---          JOIN d_location dl ON t.gpslong = dl.longitude AND t.gpslat = dl.latitude
---          JOIN d_time dt ON make_date(dt.year, dt.month, dt.day) = date(i.instant);

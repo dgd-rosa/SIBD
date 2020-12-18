@@ -1,27 +1,18 @@
 #!/usr/bin/python3
-import psycopg2, cgi
+import psycopg2
 #The following imports are needed for a foldered strcutre
 
 import sys
-sys.path.insert(1, '/afs/.ist.utl.pt/users/0/5/ist190105/web')
+sys.path.insert(1, '/afs/.ist.utl.pt/users/0/5/ist190105/web/sibd')
 
 import login
-
-
-form = cgi.FieldStorage()
-
-gpslat = form.getvalue('gpslat')
-gpslong = form.getvalue('gpslong')
-sname = form.getvalue('sname')
-saddress = form.getvalue('saddress')
 
 print('Content-type:text/html\n\n')
 print('<html>')
 print('<head>')
-print('<title>Substation Deletion</title>')
+print('<title>Bus Bar Insertion</title>')
 print('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">')
 print('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">')
-
 print('</head>')
 print('<body>')
 
@@ -30,45 +21,17 @@ try:
     # Creating connection
     connection = psycopg2.connect(login.credentials)
     cursor = connection.cursor()
-
-    sql = 'SELECT * FROM supervisor;'
-    cursor.execute(sql)
-    result = cursor.fetchall()
-    
     print('<div class="container">')
-    print('<h1> Supervisor change for')
-    print(gpslat)
-    print(' and ')
-    print(gpslong)
-    print('</h1>')
+    print('<h1> Bus Bar Insertion </h1>')
 
-    # The form will send the info needed for the SQL query
-    print('<form action="update_supervisor_database.cgi" method="post">')
-    print('<p><input class="form-control" type="hidden" name="gpslat" value="')
-    print(gpslat)
-    print('"/></p>')
-    print('<p><input class="form-control" type="hidden" name="gpslong" value="')
-    print(gpslong)
-    print('"/></p>')
-
-    print('<br>')
-
-    print('<div>')
-    print('<label>Select new supervisor</label>')
-    print('<select class="form-control" name="name_address" id="drop1" required>')
-    print('<option value="" selected disabled hidden> Current Value: ' + sname + ', ' + saddress + '</option>')
-    for row in result:
-        print('<option value="' + row[0] + ' &&& ' + row[1] + '">' + row[0] + ', ' + row[1] + '</option>')
-    print('</select>')
-    print('</div>')
-
-    print('<br>')
-
+   # The form will send the info needed for the SQL query
+    print('<form action="create_bus_bar.cgi" method="post">')
+    print('<p>Id: <input class="form-control" type="text" name="id" required/></p>')
+    print('<p>Voltage: <input class="form-control" type="number" name="voltage" required/></p>')
     print('<p><input class="btn btn-primary" type="submit" value="Submit"/></p>')
     print('</form>')
-
+    
     print('</div>')
-
     #Closing connection
     cursor.close()
 except Exception as e:

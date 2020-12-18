@@ -24,10 +24,13 @@ FROM substation s1
 WHERE NOT EXISTS(
         SELECT DISTINCT (s2.sname, s2.saddress)
         FROM substation s2
-        WHERE s2.gpslat < 39.336775 AND s1.sname = s2.sname AND s1.saddress = s2.saddress
+        WHERE s2.gpslat < 39.336775
+          AND s1.sname = s2.sname
+          AND s1.saddress = s2.saddress
     );
+
 --3. What are the elements with smallest amount of incidents?
-SELECT i1.id
+SELECT i1.id, COUNT(*) as amount_of_incidents
 FROM incident i1
 GROUP BY i1.id
 HAVING COUNT(*) <= ALL (
@@ -37,8 +40,11 @@ HAVING COUNT(*) <= ALL (
 );
 
 --4. How many substations does each supervisor supervise? (include supervisors that do not
-    --supervise any at the moment)
-SELECT s1.name, s1.address, COUNT(s2.gpslat) AS n_substations --We use gpslat in COUNT() because it ignores null values
-FROM supervisor s1 LEFT JOIN substation s2 on s1.name = s2.sname and s1.address = s2.saddress
+--supervise any at the moment)
+SELECT s1.name,
+       s1.address,
+       COUNT(s2.gpslat) AS n_substations --We use gpslat in COUNT() because it ignores null values
+FROM supervisor s1
+         LEFT JOIN substation s2 on s1.name = s2.sname and s1.address = s2.saddress
 GROUP BY s1.name, s1.address;
 

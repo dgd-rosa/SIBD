@@ -3,7 +3,7 @@ import psycopg2, cgi
 #The following imports are needed for a foldered strcutre
 
 import sys
-sys.path.insert(1, '/afs/.ist.utl.pt/users/0/5/ist190105/web')
+sys.path.insert(1, '/afs/.ist.utl.pt/users/0/5/ist190105/web/sibd')
 
 import login
 
@@ -13,14 +13,16 @@ form = cgi.FieldStorage()
 instant = form.getvalue('instant')
 id = form.getvalue('id')
 description = form.getvalue('description')
+severity = form.getvalue('severity')
+
+
 
 print('Content-type:text/html\n\n')
 print('<html>')
 print('<head>')
-print('<title>Incident Deletion</title>')
+print('<title>Incident Created</title>')
 print('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">')
 print('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">')
-
 print('</head>')
 print('<body>')
 
@@ -29,27 +31,20 @@ try:
     # Creating connection
     connection = psycopg2.connect(login.credentials)
     cursor = connection.cursor()
-    
     print('<div class="container">')
-    print('<h1> Incident change for')
-    print(instant)
-    print(' and ')
-    print(id)
-    print('</h1>')
+    print('<h1> Incident Creation </h1>')
 
-    # The form will send the info needed for the SQL query
-    print('<form action="update_incident_database.cgi" method="post">')
-    print('<p><input class="form-control" type="hidden" name="instant" value="')
-    print(instant)
-    print('"/></p>')
-    print('<p><input class="form-control" type="hidden" name="id" value="')
-    print(id)
-    print('"/></p>')
-    print('<p>description: <input class="form-control" type="text" name="description" placeholder="Current value: ')
-    print(description)
-    print('"/></p>')
-    print('<p><input class="btn btn-primary" type="submit" value="Submit"/></p>')
-    print('</form>')
+    ## Creating an incident
+    sql_create_incident = "INSERT INTO incident VALUES(%(instant)s, %(id)s, %(description)s, %(severity)s);"
+
+    # Execute
+    cursor.execute(sql_create_incident, {'instant': instant, 'id': id, 'description': description, 'severity': severity})
+
+    connection.commit()
+
+    #Display success message and return to home button
+    print('<h3>Your Incident was created successfully</h3>')
+    print('<a href="list_incidents.cgi">Return home</a>')
 
     print('</div>')
 

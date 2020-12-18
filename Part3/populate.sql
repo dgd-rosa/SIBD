@@ -65,9 +65,10 @@ INSERT INTO line VALUES ('L-2', 800, 'B-4', 'B-2');
 
 -- Create incident
 INSERT INTO incident VALUES ('1999-01-20 04:05:06', 'L-1', 'Line broke down', 'low');
+INSERT INTO incident VALUES ('1999-01-22 04:05:06', 'L-1', 'Line broke down', 'low');
 INSERT INTO incident VALUES ('1999-01-25 04:05:06', 'B-789', 'Bus bar is not working', 'low');
-INSERT INTO incident VALUES ('1999-01-21 05:05:06', 'B-789', 'Bus bar is not working', 'high');
--- INSERT INTO incident VALUES ('2020-01-21 05:05:06', 'B-789', 'Bus bar is not working', 'high');
+-- INSERT INTO incident VALUES ('1999-01-21 05:05:06', 'B-789', 'Bus bar is not working', 'high');
+INSERT INTO incident VALUES ('2020-01-21 05:05:06', 'B-789', 'Bus bar is not working', 'high');
 INSERT INTO incident VALUES ('2021-03-21 04:05:06', 'T-1', 'Transformer broke', 'high');
 INSERT INTO incident VALUES ('2021-04-21 04:01:06', 'T-1', 'Transformer broke', 'high');
 INSERT INTO incident VALUES ('2021-05-21 14:05:06', 'T-1', 'Transformer broke', 'high');
@@ -78,9 +79,9 @@ INSERT INTO lineincident VALUES ('1999-01-20 04:05:06', 'L-1', '555.05');
 -- Create analyses
 --INSERT INTO analyses VALUES ('2021-01-21 04:05:06', 'T-1', 'Transformer does not work', 'D Rose', 'Porto covo'); -- Gives error due to 3rd trigger
 INSERT INTO analyses VALUES ('1999-01-20 04:05:06', 'L-1', 'Line was not easy to fix', 'First Month', 'Lisbon');
---INSERT INTO analyses VALUES ('1999-01-21 04:05:06', 'B-789', 'Bus bar was impossible to fix', 'D Rose', 'Forte da casa');
-INSERT INTO analyses VALUES ('1999-01-21 05:05:06', 'B-789', 'Bus bar was impossible to fix', 'D Rose', 'Forte da casa');
--- INSERT INTO analyses VALUES ('2020-01-21 05:05:06', 'B-789', 'Bus bar was impossible to fix', 'Peter Warrior', 'Ourique');
+INSERT INTO analyses VALUES ('1999-01-25 04:05:06', 'B-789', 'Bus bar was impossible to fix', 'D Rose', 'Forte da casa');
+-- INSERT INTO analyses VALUES ('1999-01-21 05:05:06', 'B-789', 'Bus bar was impossible to fix', 'D Rose', 'Forte da casa');
+INSERT INTO analyses VALUES ('2020-01-21 05:05:06', 'B-789', 'Bus bar was impossible to fix', 'D Rose', 'Forte da casa');
 INSERT INTO analyses VALUES ('2021-04-21 04:01:06', 'T-1', 'Transformer broke', 'Peter Warrior', 'Ourique');
 INSERT INTO analyses VALUES ('2021-03-21 04:05:06', 'T-1', 'Transformer broke', 'Peter Warrior', 'Ourique');
 INSERT INTO analyses VALUES ('2021-05-21 14:05:06', 'T-1', 'Transformer broke', 'Peter Warrior', 'Ourique');

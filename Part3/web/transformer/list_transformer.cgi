@@ -3,14 +3,14 @@ import psycopg2
 #The following imports are needed for a foldered strcutre
 
 import sys
-sys.path.insert(1, '/afs/.ist.utl.pt/users/0/5/ist190105/web')
+sys.path.insert(1, '/afs/.ist.utl.pt/users/0/5/ist190105/web/sibd')
 
 import login
 
 print('Content-type:text/html\n\n')
 print('<html>')
 print('<head>')
-print('<title>Substation List</title>')
+print('<title>Transformer List</title>')
 print('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">')
 print('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">')
 print('</head>')
@@ -22,10 +22,10 @@ try:
     connection = psycopg2.connect(login.credentials)
     cursor = connection.cursor()
     print('<div class="container">')
-    print('<h1> Substation List </h1>')
+    print('<h1> Transformer List </h1>')
 
     # Making query
-    sql = 'SELECT * FROM substation;'
+    sql = 'SELECT * FROM transformer;'
     cursor.execute(sql)
     result = cursor.fetchall()
     num = len(result)
@@ -34,7 +34,7 @@ try:
     print('<p> ' + str(num) + ' records retrieved:</p>')
     print('<table class="table table-striped table-borderless table-hover">')
     print('<thead class="thead-dark">')
-    print('<tr><th scope="col">gpslat</th><th scope="col">gpslong</th><th scope="col">locality</th><th scope="col">sname</th><th scope="col">saddress</th><th scope="col"></th><th scope="col"></th></tr>')
+    print('<tr><th scope="col">id</th><th scope="col">pv</th><th scope="col">sv</th><th scope="col">gpslat</th><th scope="col">gpslong</th><th scope="col">pbbid</th><th scope="col">sbbid</th><th scope="col"></th></tr>')
     print('</thead>')
     print('<tbody>')
     for row in result:
@@ -44,40 +44,19 @@ try:
             print('<td>')
             print(value)
             print('</td>')
-
-        #Remove button        
+        
         print('<td>')
-        print('<a href="delete_substation.cgi?gpslat=')
-        print(row[0])
-        print('&gpslong=')
-        print(row[1])
-        print('">')
+        print('<a href="delete_transformer.cgi?id=' + row[0] + '">')
         print('<i class="fa fa-minus"></i>')
         print('</a>')
         print('</td>')
-
-        #Edit button
-        print('<td>')
-        print('<a href="edit_supervisor.cgi?gpslat=')
-        print(row[0])
-        print('&gpslong=')
-        print(row[1])
-        print('&sname=')
-        print(row[3])
-        print('&saddress=')
-        print(row[4])
-        print('">')
-        print('<i class="fa fa-pencil"></i>')
-        print('</a>')
-        print('</td>')
         
-
         print('</tr>')
     print('</tbody>')
     print('</table>')
 
     #Insert button
-    print('<a href="insert_substation.cgi" >')
+    print('<a href="insert_transformer.cgi" >')
     print('<i class="fa fa-plus fa-4x"></i>')
     print('</a>')
 
