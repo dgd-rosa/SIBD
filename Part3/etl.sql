@@ -4,14 +4,29 @@ SELECT DISTINCT name, address
 FROM analyses;
 
 -- populate d_time
-INSERT INTO d_time(day, week_day, week, month, trimester, year)
-SELECT EXTRACT(DAY FROM instant),
-       EXTRACT(DOW FROM instant),
-       EXTRACT(WEEK FROM instant),
-       EXTRACT(MONTH FROM instant),
-       EXTRACT(QUARTER FROM instant),
-       EXTRACT(YEAR FROM instant)
-FROM incident;
+CREATE OR REPLACE FUNCTION load_time_dimension() RETURNS VOID AS
+$$
+DECLARE
+    date_value TIMESTAMP;
+
+BEGIN
+    date_value := '1998-01-01 00:00:00';
+    WHILE date_value < '2030-01-01 00:00:00'
+        LOOP
+            INSERT INTO d_time(day, week_day, week, month, trimester, year)
+            VALUES (EXTRACT(DAY FROM date_value),
+                    EXTRACT(DOW FROM date_value),
+                    EXTRACT(WEEK FROM date_value),
+                    EXTRACT(MONTH FROM date_value),
+                    EXTRACT(QUARTER FROM date_value),
+                    EXTRACT(YEAR FROM date_value));
+            date_value := date_value + INTERVAL '1 DAY';
+        end loop;
+end;
+$$ LANGUAGE plpgsql;
+
+SELECT load_time_dimension();
+
 
 -- populate d_location
 INSERT INTO d_location(latitude, longitude, locality)
@@ -27,11 +42,11 @@ SELECT DISTINCT b.id, 'BUSBAR'
 FROM incident i
          JOIN busbar b ON i.id = b.id
 UNION
-SELECT DISTINCT  t.id, 'TRANSFORMER'
+SELECT DISTINCT t.id, 'TRANSFORMER'
 FROM incident i
          JOIN transformer t ON i.id = t.id
 UNION
-SELECT DISTINCT  l.id, 'LINE'
+SELECT DISTINCT l.id, 'LINE'
 FROM incident i
          JOIN line l ON i.id = l.id;
 
